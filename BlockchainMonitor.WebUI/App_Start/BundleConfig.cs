@@ -19,6 +19,18 @@ namespace BlockchainMonitor.WebUI
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            //knockout
+            bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
+                        "~/Scripts/knockout-{version}.js"));
+
+            //signalr
+            bundles.Add(new ScriptBundle("~/bundles/signalr").Include(
+                        "~/Scripts/jquery.signalR-{version}.js"));      
+
+            //custom scripts
+            bundles.Add(new ScriptBundle("~/bundles/appscripts").Include(
+                      "~/Scripts/BlockChainVM.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));

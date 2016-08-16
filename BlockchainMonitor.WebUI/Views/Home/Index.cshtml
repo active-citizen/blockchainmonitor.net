@@ -1,31 +1,92 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model BlockchainMonitor.WebUI.ViewModels.MainPage.BlockChainVM
+@using BlockchainMonitor.WebUI.Utils
+@{
+    ViewBag.Title = "Мониторинг блокчейн базы";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+@section scripts {
+@Scripts.Render("~/bundles/appscripts")
+<script src="~/signalr/hubs"></script>
+
+<script>
+    var model = new BlockChainVM(@Html.ToJson(Model));
+
+    $(function () {
+        ko.applyBindings(model);
+
+        var blockchain = $.connection.blockchainHub;
+        blockchain.client.lastBlockTransactionCount = lastBlockTransactionCount;
+
+        $.connection.hub.start();
+
+    });
+    //setTimeout(function () {
+    //    model.allBlocks()[5].transactionsCount(99);
+    //}, 10000);
+    //var model = {"AllBlocks":[{"Number":1,"TransactionsCount":100},{"Number":2,"TransactionsCount":100}],"Statistic":null,"LastTransactions":null,"AllParticipants":null};
+</script>
+}
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <!--monitoring data-->
+    <div class="col-md-8">
+        <!--blocks-->
+        <hr />
+        <div class="row">
+            <h3 class="pull-left">Блоки транзакций блокчейн базы данных</h3>
+            <!--blocks navigation buttons-->
+            <div class="pull-right">
+                <div class="btn-group" role="group" aria-label="All Blocks">
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--blocks-->
+            <!--ВЕРСТАЛЬЩИКУ: сделать эти блоки прокручиваемыми направо-->
+            <div data-bind="foreach: allBlocks" class="all_block">
+                <div class="external_block pull-right">
+                    <div class="internal_block text_white">
+                        <div class="text-center">Блок №</div>
+                        <div data-bind="text: number" class="text-center"></div><br />
+                        <div class="text-center">Всего транзакций</div>
+                        <div data-bind="text: transactionsCount" class="text-center"></div><br />                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--numbers + transations-->
+        <div class="row">
+            <!--numbers-->
+            <div class="col-md-6">
+                <table border="1">
+                    <tr>
+                        <td>
+                            <div>Всего блоков</div>
+                            <div>2 234</div>
+                        </td>
+                        <td>
+                            <div>Всего транзакций</div>
+                            <div>234 432</div>
+                        </td>
+                    </tr>
+                    <tr></tr>
+                    <tr></tr>
+                    <tr></tr>
+                </table>
+            </div>
+            <!--transactions-->
+            <div class="col-md-6">
+
+            </div>
+        </div>
     </div>
+    <!--participants data-->
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
 </div>
