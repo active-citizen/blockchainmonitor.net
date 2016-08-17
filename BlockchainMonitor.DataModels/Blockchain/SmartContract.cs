@@ -5,15 +5,17 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace BlockchainMonitor.WebUI.Models.Transactions
+namespace BlockchainMonitor.DataModels.Blockchain
 {
     public class SmartContract
     {
         [Key()]
-        [Description("Идентификатор")]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
-        [Description("Транзакции")]
+        public byte [] ChainCodeId { get; set; }
+
         public List<Transaction> Transactions { get; set; }
+
+        public byte [] ChainCode { get; set; }
     }
 }

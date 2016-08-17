@@ -7,22 +7,28 @@ using BlockchainMonitor.WebUI.ViewModels.MainPage;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.AspNet.SignalR;
+using BlockchainMonitor.Infrastructure.Provider;
+using AutoMapper;
 
 namespace BlockchainMonitor.WebUI.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IBlockchainProvider _provider;
+        private readonly IMapper _mapper;
+
+        public HomeController(IBlockchainProvider provider, IMapper mapper)
+        {
+            _provider = provider;
+            _mapper = mapper;
+        }
+
         public ActionResult Index()
         {
             var model = new BlockChainVM();
-            model.AllBlocks = new List<BlockVM>() {
-                new BlockVM() { Number = 1987, TransactionsCount = 10000 },
-                new BlockVM() { Number = 1988, TransactionsCount = 10000 },
-                new BlockVM() { Number = 1989, TransactionsCount = 10000 },
-                new BlockVM() { Number = 1990, TransactionsCount = 10000 },
-                new BlockVM() { Number = 1991, TransactionsCount = 10000 },
-                new BlockVM() { Number = 1992, TransactionsCount = 67 },
-            };
+            var blocks = _provider.GetAllBlocks();
+            model.AllBlocks = blocks.Select(block => _mapper.Map<BlockVM>(block)).ToList();
+
             Task.Run(() => {
                 Thread.Sleep(10000);
                 var hub = GlobalHost.ConnectionManager
