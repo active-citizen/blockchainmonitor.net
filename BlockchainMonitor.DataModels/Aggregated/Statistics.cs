@@ -18,7 +18,7 @@ namespace BlockchainMonitor.DataModels.Aggregated
 
         public int NonValidatingNodesCount { get; set; }
 
-        public double DBSizeGb { get; set; }
+        public double DataBaseSizeGB { get; set; }
 
 
     }

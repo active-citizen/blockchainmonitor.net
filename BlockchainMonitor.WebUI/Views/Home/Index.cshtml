@@ -46,7 +46,7 @@
             <!--blocks-->
             <!--ВЕРСТАЛЬЩИКУ: сделать эти блоки прокручиваемыми направо-->
             <div data-bind="foreach: allBlocks" class="all_block">
-                <div class="external_block pull-right">
+                <div class="external_block pull-left">
                     <div class="internal_block text_white">
                         <div class="text-center">Блок №</div>
                         <div data-bind="text: number" class="text-center"></div><br />
@@ -64,21 +64,41 @@
                     <tr>
                         <td>
                             <div>Всего блоков</div>
-                            <div>2 234</div>
+                            <div data-bind="text: statistics.blocksCount"></div>
                         </td>
                         <td>
                             <div>Всего транзакций</div>
-                            <div>234 432</div>
+                            <div data-bind="text: statistics.transactionsCount"></div>
                         </td>
                     </tr>
-                    <tr></tr>
-                    <tr></tr>
+                    <tr>
+                        <td>
+                            <div>Размер базы данных</div>
+                            <div data-bind="text: statistics.dataBaseSizeGB"></div>
+                        </td>
+                        <td>
+                            <div>Всего смартконтрактов</div>
+                            <div data-bind="text: statistics.smartContractsCount"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>Всего валидаторов</div>
+                            <div data-bind="text: statistics.validatingNodesCount"></div>
+                        </td>
+                        <td>
+                            <div>Остальные ноды</div>
+                            <div data-bind="text: statistics.nonValidatingNodesCount"></div>
+                        </td>
+                    </tr>
                     <tr></tr>
                 </table>
             </div>
             <!--transactions-->
             <div class="col-md-6">
+                <table border="1">
 
+                </table>
             </div>
         </div>
     </div>

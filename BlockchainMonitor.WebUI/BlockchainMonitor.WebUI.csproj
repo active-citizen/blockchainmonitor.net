@@ -255,6 +255,7 @@
     <Compile Include="ViewModels\MainPage\Transaction.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\img\dit.png" />
     <Content Include="Scripts\BlockChainVM.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

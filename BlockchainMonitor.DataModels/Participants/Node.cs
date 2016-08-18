@@ -15,7 +15,7 @@ namespace BlockchainMonitor.DataModels.Participants
 
         public string Name { get; set; }
 
-        public IPAddress IPAddress { get; set; }
+        public string IPAddress { get; set; }
 
         public Participant Participant { get; set; }
 

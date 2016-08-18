@@ -14,7 +14,7 @@ namespace BlockchainMonitor.DataModels.Blockchain
 
         public byte [] ChainCodeId { get; set; }
 
-        public List<Transaction> Transactions { get; set; }
+        public virtual List<Transaction> Transactions { get; set; }
 
         public byte [] ChainCode { get; set; }
     }

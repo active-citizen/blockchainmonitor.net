@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using AutoMapper;
+using BlockchainMonitor.DataModels.Aggregated;
 using BlockchainMonitor.DataModels.Blockchain;
 using BlockchainMonitor.WebUI.ViewModels.MainPage;
 using Owin;
@@ -27,6 +28,9 @@ namespace BlockchainMonitor.WebUI.Initialization
             {
                 cfg.CreateMap<Block, BlockVM>().ForMember(blockVM => blockVM.TransactionsCount,
                     blockConfig => blockConfig.MapFrom(block => block.Transactions.Count));
+
+                cfg.CreateMap<Statistics, StatisticsVM>();
+
                 //.ForMember(vm => vm.CategoryId, li => li.MapFrom(vm => vm.Category.Id));
             });
             return config.CreateMapper();

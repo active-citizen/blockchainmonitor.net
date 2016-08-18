@@ -26,8 +26,12 @@ namespace BlockchainMonitor.WebUI.Controllers
         public ActionResult Index()
         {
             var model = new BlockChainVM();
+
             var blocks = _provider.GetAllBlocks();
             model.AllBlocks = blocks.Select(block => _mapper.Map<BlockVM>(block)).ToList();
+
+            var stat = _provider.GetAllStatistics();
+            model.Statistics = _mapper.Map<StatisticsVM>(stat);
 
             Task.Run(() => {
                 Thread.Sleep(10000);

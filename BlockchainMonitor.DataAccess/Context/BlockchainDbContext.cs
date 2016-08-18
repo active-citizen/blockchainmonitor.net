@@ -22,7 +22,7 @@ namespace BlockchainMonitor.DataAccess.Context
         public BlockchainDbContext()
             : base("BlockchainMonitor")
         {
-            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<BlockchainDbContext, Migrations.StaticContent.Configuration>(true));
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<BlockchainDbContext, Migrations.Configuration>(true));
 
             _participants = new RepositoryBase<int, Participant>(this, i => i.Id);
             _nodes = new RepositoryBase<int, Node>(this, i => i.Id);

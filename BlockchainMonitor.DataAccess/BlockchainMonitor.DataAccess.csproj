@@ -53,9 +53,14 @@
     <Compile Include="Context\BlockchainDbContext.cs" />
     <Compile Include="Context\IRepository.cs" />
     <Compile Include="Context\RepositoryBase.cs" />
+    <Compile Include="Migrations.Data\Configuration.Data.cs" />
     <Compile Include="Migrations\201608170915367_Init.cs" />
     <Compile Include="Migrations\201608170915367_Init.Designer.cs">
       <DependentUpon>201608170915367_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608171209500_IPAddressChanged.cs" />
+    <Compile Include="Migrations\201608171209500_IPAddressChanged.Designer.cs">
+      <DependentUpon>201608171209500_IPAddressChanged.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +78,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201608170915367_Init.resx">
       <DependentUpon>201608170915367_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608171209500_IPAddressChanged.resx">
+      <DependentUpon>201608171209500_IPAddressChanged.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -33,8 +33,15 @@ namespace BlockchainMonitor.DataAccess.Context
 
         public IQueryable<TItem> GetAll()
         {
-            var set = dbContext.Set(typeof(TItem));
-            return set.Cast<TItem>();
+            try
+            {
+                var set = dbContext.Set(typeof(TItem));
+                return set.Cast<TItem>();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public TItem Create()
