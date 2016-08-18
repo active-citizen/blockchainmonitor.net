@@ -14,6 +14,8 @@
         validatingNodesCount: ko.observable(_statistics.ValidatingNodesCount),
         nonValidatingNodesCount: ko.observable(_statistics.NonValidatingNodesCount),
     };
+
+    this.transactions = ko.observableArray(model.LastTransactions);
 }
 
 function BlockVM(model) {
@@ -23,4 +25,8 @@ function BlockVM(model) {
 
 function lastBlockTransactionCount(count) {
     model.allBlocks()[model.allBlocks().length - 1].transactionsCount(count);
+}
+
+function newTransactions(transactions) {
+
 }

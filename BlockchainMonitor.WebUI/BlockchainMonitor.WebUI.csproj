@@ -250,9 +250,10 @@
     <Compile Include="Utils\HtmlHelperExtensions.cs" />
     <Compile Include="ViewModels\MainPage\BlockVM.cs" />
     <Compile Include="ViewModels\MainPage\BlockChainVM.cs" />
-    <Compile Include="ViewModels\MainPage\Participant.cs" />
+    <Compile Include="ViewModels\MainPage\ParticipantListVM.cs" />
+    <Compile Include="ViewModels\MainPage\ParticipantVM.cs" />
     <Compile Include="ViewModels\MainPage\StatisticVM.cs" />
-    <Compile Include="ViewModels\MainPage\Transaction.cs" />
+    <Compile Include="ViewModels\MainPage\TransactionVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\img\dit.png" />
@@ -331,6 +332,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Search.cshtml" />
+    <Content Include="Views\Shared\_ParticipantPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

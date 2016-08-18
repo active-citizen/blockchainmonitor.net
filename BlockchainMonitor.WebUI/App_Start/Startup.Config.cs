@@ -21,8 +21,8 @@ namespace BlockchainMonitor.WebUI
 
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
-            var contentProviderModule = new BlockchainProvidersModule();
-            builder.RegisterModule(contentProviderModule);
+            builder.RegisterModule(new BlockchainProvidersModule());
+            builder.RegisterModule(new ParticipantMonitorModule());
 
             AutoMapperInitializer.Initialize(builder, app);
 

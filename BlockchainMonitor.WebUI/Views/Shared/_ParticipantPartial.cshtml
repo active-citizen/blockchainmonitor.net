@@ -1,0 +1,37 @@
+﻿@model BlockchainMonitor.WebUI.ViewModels.MainPage.ParticipantListVM
+@using BlockchainMonitor.WebUI.ViewModels.MainPage
+<!--offline-->
+<div>
+    <hr />
+    <div class="clearfix">
+        <h3 class="pull-left">@Model.Title</h3>
+        <!--blocks navigation buttons-->
+        <div class="pull-right">
+            <div class="btn-group" role="group" aria-label="participants online">
+                <button type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="all-participants clearfix">
+        <!--ВЕРСТАЛЬЩИКУ: сделать эти блоки прокручиваемыми направо-->
+        @foreach (ParticipantVM par in Model.Participants)
+        {
+            <div class="participant pull-left">
+                <div class="participant-image">
+                    <img src="@par.Icon" />
+                </div>
+                <div>
+                    @par.NodesCount сервер(а)
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+

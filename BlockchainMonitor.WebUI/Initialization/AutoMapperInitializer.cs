@@ -2,6 +2,7 @@
 using AutoMapper;
 using BlockchainMonitor.DataModels.Aggregated;
 using BlockchainMonitor.DataModels.Blockchain;
+using BlockchainMonitor.DataModels.Participants;
 using BlockchainMonitor.WebUI.ViewModels.MainPage;
 using Owin;
 using System;
@@ -30,6 +31,11 @@ namespace BlockchainMonitor.WebUI.Initialization
                     blockConfig => blockConfig.MapFrom(block => block.Transactions.Count));
 
                 cfg.CreateMap<Statistics, StatisticsVM>();
+
+                cfg.CreateMap<Transaction, TransactionVM>();
+
+                cfg.CreateMap<Participant, ParticipantVM>().ForMember(parVM => parVM.NodesCount, 
+                    parConfig => parConfig.MapFrom(par => par.Nodes.Count));
 
                 //.ForMember(vm => vm.CategoryId, li => li.MapFrom(vm => vm.Category.Id));
             });

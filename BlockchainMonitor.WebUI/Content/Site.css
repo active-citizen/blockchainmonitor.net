@@ -48,3 +48,48 @@ textarea {
 .text_white {
     color:white;
 }
+
+.transactions-list {
+    overflow: hidden;
+    height: 400px;
+    max-height: 400px;
+}
+
+.transactions-list .transaction {
+    overflow: hidden;
+    height: 30px;
+    -webkit-transition: height 0.5s, -webkit-transform 0.5s;
+    transition: height 0.5s, transform 0.5s;
+}
+
+.transactions-list table {
+    width: 470px;
+}
+
+.transactions-list table td:nth-child(1) {
+    width: 100px;
+}
+
+.transactions-list table td:nth-child(2) {
+    width: 100px;
+}
+
+.transactions-list table td:nth-child(3) {
+    width: 70px;
+}
+
+.transactions-list table td:nth-child(4) {
+    width: 200px;
+}
+
+.transactions-list .in-transition {
+    height: 0px;
+}
+
+.all-participants {
+
+}
+
+.participant-image img {
+    height: 20px;
+}

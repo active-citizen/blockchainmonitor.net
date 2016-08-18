@@ -1,5 +1,6 @@
 ﻿@model BlockchainMonitor.WebUI.ViewModels.MainPage.BlockChainVM
 @using BlockchainMonitor.WebUI.Utils
+@using BlockchainMonitor.WebUI.ViewModels.MainPage
 @{
     ViewBag.Title = "Мониторинг блокчейн базы";
 }
@@ -16,9 +17,9 @@
 
         var blockchain = $.connection.blockchainHub;
         blockchain.client.lastBlockTransactionCount = lastBlockTransactionCount;
+        blockchain.client.newTransactions = newTransactions;
 
         $.connection.hub.start();
-
     });
 </script>
 }
@@ -96,13 +97,35 @@
             </div>
             <!--transactions-->
             <div class="col-md-6">
-                <table border="1">
-
+                 <div>Последние транзакции</div>
+                 <table border="1">
+                    <thead>
+                        <tr>
+                            <td>Идентификатор</td>
+                            <td>Смартконтракт</td>
+                            <td>Время</td>
+                            <td>Данные</td>
+                        </tr>
+                    </thead>
                 </table>
+                <div class="transactions-list" data-bind="foreach: transactions">
+                    <div class="transaction in-transition">
+                        <table border="1">
+                            <tr>
+                                <td data-bind="text: Id"></td>
+                                <td data-bind="text: SmartContractId"></td>
+                                <td data-bind="text: Time"></td>
+                                <td data-bind="text: Data"></td>
+                            </tr>
+                        </table>                    
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <!--participants data-->
     <div class="col-md-4">
+        @Html.Partial("_ParticipantPartial", new ParticipantListVM("Участники онлайн") { Participants = Model.AliveParticipants })
+        @Html.Partial("_ParticipantPartial", new ParticipantListVM("Участники офлайн") { Participants = Model.DeadParticipants })
     </div>
 </div>
