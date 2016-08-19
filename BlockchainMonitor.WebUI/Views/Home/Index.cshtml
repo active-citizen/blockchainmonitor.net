@@ -17,7 +17,9 @@
 
         var blockchain = $.connection.blockchainHub;
         blockchain.client.updateLastBlockTransactionCount = model.updateLastBlockTransactionCount;
+
         blockchain.client.updateLastTransactions = model.updateLastTransactions;
+        model.animateTransactions();
 
         $.connection.hub.start();
     });
@@ -94,6 +96,10 @@
                     </tr>
                     <tr></tr>
                 </table>
+                <div>
+                    <!--ВЕРСТАЛЬЩИКУ: ActionLink превращается в <a> на него можно вот так навесить класс, а можно на внешний див-->
+                    @Html.ActionLink("Вся статистика", "Index", "Statisctics", new { @class = "all-statistic-link"})
+                </div>
             </div>
             <!--transactions-->
             <div class="col-md-6">

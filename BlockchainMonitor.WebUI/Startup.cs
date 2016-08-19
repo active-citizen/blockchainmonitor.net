@@ -11,8 +11,7 @@ namespace BlockchainMonitor.WebUI
             var container = RegisterDependencies(app);
 
             ConfigureAuth(app);
-
-            app.MapSignalR();
+            ConfigureSignalR(app);
         }
     }
 }

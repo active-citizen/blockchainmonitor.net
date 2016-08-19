@@ -26,18 +26,29 @@
     }
 
     this.updateLastTransactions = _updateLastTransactions;
-    function _updateLastTransactions(transactions) {
-        for (var j = 0; j < transactions.length; j++) {
-            for (var i = 0; i < self.transactions.length; i++) {
-                if (self.transactions[i].Id == transactions[j].Id) {
-                    break;
-                }
-                if (i == self.transactions.length - 1)
-                {
+    function _updateLastTransactions(currentTransactions) {
+        var previousTransactions = self.transactions();
+        var previousTransactionsMap = previousTransactions.reduce(function (result, tran) {
+            result[tran.id] = tran;
+            return result;
+        }, {} );
+        var newTransactions = currentTransactions.filter(function (tran) {
+            return previousTransactionsMap[tran.id] === undefined;
+        });
+        if (newTransactions.length === 0) return;
 
-                }
-            }
-        }
+        var newLength = self.transactions.unshift.apply(self.transactions, newTransactions);
+
+        const maxLength = 8;
+        if (newLength <= maxLength) return;
+        self.transactions.splice(maxLength, newLength - maxLength);
+
+        _animateTransactions();
+    }
+
+    this.animateTransactions = _animateTransactions;
+    function _animateTransactions() {
+        $('.transactions-list .transaction.in-transition').toggleClass('in-transition');
     }
 }
 

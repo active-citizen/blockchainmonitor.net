@@ -19,7 +19,6 @@ namespace BlockchainMonitor.WebUI.Utils
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             });
 
-
             return MvcHtmlString.Create(jsonString);
         }
     }

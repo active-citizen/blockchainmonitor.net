@@ -22,7 +22,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Главная", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Графики", "About", "Home")</li>
+                    <li>@Html.ActionLink("Графики", "Index", "Graphics")</li>
+                    <li>@Html.ActionLink("Статистика", "Index", "Statistics")</li>
+                    <li>@Html.ActionLink("Участники", "Index", "Participants")</li>
+                    <li>@Html.ActionLink("Смартконтракты", "Index", "SmartContracts")</li>
                 </ul>
                 @Html.Partial("_Search")
             </div>
@@ -34,9 +37,9 @@
         <footer>
             <div class="pull-left">&copy; @DateTime.Now.Year - ДИТ г. Москвы</div>
             <div class="center-block">
-                <span><a href="">О проекте</a></span>
-                <span><a href="">Стать участником</a></span>
-                <span><a href="">API</a></span>
+                <span>@Html.ActionLink("О проекте", "About", "Home")</span>
+                <span>@Html.ActionLink("Стать участником", "BecomeMember", "Home")</span>
+                <span>@Html.ActionLink("API", "API", "Home")</span>
             </div>
         </footer>
     </div>
