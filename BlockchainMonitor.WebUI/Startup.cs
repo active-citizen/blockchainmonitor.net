@@ -8,8 +8,10 @@ namespace BlockchainMonitor.WebUI
     {
         public void Configuration(IAppBuilder app)
         {
+            var container = RegisterDependencies(app);
+
             ConfigureAuth(app);
-            app.MapSignalR();
+            ConfigureSignalR(app);
         }
     }
 }

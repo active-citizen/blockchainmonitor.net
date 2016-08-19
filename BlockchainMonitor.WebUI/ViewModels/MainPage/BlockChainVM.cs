@@ -9,11 +9,12 @@ namespace BlockchainMonitor.WebUI.ViewModels.MainPage
     {
         public List<BlockVM> AllBlocks { get; set; }
 
-        public StatisticVM Statistic { get; set; }
+        public StatisticsVM Statistics { get; set; }
 
-        public List<Transaction> LastTransactions { get; set; }
+        public List<TransactionVM> LastTransactions { get; set; }
 
-        public List<Participant> AllParticipants { get; set; }
+        public List<ParticipantVM> AliveParticipants { get; set; }
 
+        public List<ParticipantVM> DeadParticipants { get; set; }
     }
 }

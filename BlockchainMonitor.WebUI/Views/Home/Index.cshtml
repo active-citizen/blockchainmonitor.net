@@ -1,5 +1,6 @@
 ﻿@model BlockchainMonitor.WebUI.ViewModels.MainPage.BlockChainVM
 @using BlockchainMonitor.WebUI.Utils
+@using BlockchainMonitor.WebUI.ViewModels.MainPage
 @{
     ViewBag.Title = "Мониторинг блокчейн базы";
 }
@@ -15,15 +16,13 @@
         ko.applyBindings(model);
 
         var blockchain = $.connection.blockchainHub;
-        blockchain.client.lastBlockTransactionCount = lastBlockTransactionCount;
+        blockchain.client.updateLastBlockTransactionCount = model.updateLastBlockTransactionCount;
+
+        blockchain.client.updateLastTransactions = model.updateLastTransactions;
+        model.animateTransactions();
 
         $.connection.hub.start();
-
     });
-    //setTimeout(function () {
-    //    model.allBlocks()[5].transactionsCount(99);
-    //}, 10000);
-    //var model = {"AllBlocks":[{"Number":1,"TransactionsCount":100},{"Number":2,"TransactionsCount":100}],"Statistic":null,"LastTransactions":null,"AllParticipants":null};
 </script>
 }
 
@@ -50,7 +49,7 @@
             <!--blocks-->
             <!--ВЕРСТАЛЬЩИКУ: сделать эти блоки прокручиваемыми направо-->
             <div data-bind="foreach: allBlocks" class="all_block">
-                <div class="external_block pull-right">
+                <div class="external_block pull-left">
                     <div class="internal_block text_white">
                         <div class="text-center">Блок №</div>
                         <div data-bind="text: number" class="text-center"></div><br />
@@ -68,25 +67,71 @@
                     <tr>
                         <td>
                             <div>Всего блоков</div>
-                            <div>2 234</div>
+                            <div data-bind="text: statistics.blocksCount"></div>
                         </td>
                         <td>
                             <div>Всего транзакций</div>
-                            <div>234 432</div>
+                            <div data-bind="text: statistics.transactionsCount"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>Размер базы данных</div>
+                            <div data-bind="text: statistics.dataBaseSizeGB"></div>
+                        </td>
+                        <td>
+                            <div>Всего смартконтрактов</div>
+                            <div data-bind="text: statistics.smartContractsCount"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>Всего валидаторов</div>
+                            <div data-bind="text: statistics.validatingNodesCount"></div>
+                        </td>
+                        <td>
+                            <div>Остальные ноды</div>
+                            <div data-bind="text: statistics.nonValidatingNodesCount"></div>
                         </td>
                     </tr>
                     <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
                 </table>
+                <div>
+                    <!--ВЕРСТАЛЬЩИКУ: ActionLink превращается в <a> на него можно вот так навесить класс, а можно на внешний див-->
+                    @Html.ActionLink("Вся статистика", "Index", "Statisctics", new { @class = "all-statistic-link"})
+                </div>
             </div>
             <!--transactions-->
             <div class="col-md-6">
-
+                 <div>Последние транзакции</div>
+                 <table border="1">
+                    <thead>
+                        <tr>
+                            <td>Идентификатор</td>
+                            <td>Смартконтракт</td>
+                            <td>Время</td>
+                            <td>Данные</td>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="transactions-list" data-bind="foreach: transactions">
+                    <div class="transaction in-transition">
+                        <table border="1">
+                            <tr>
+                                <td data-bind="text: id"></td>
+                                <td data-bind="text: smartContractId"></td>
+                                <td data-bind="text: time"></td>
+                                <td data-bind="text: data"></td>
+                            </tr>
+                        </table>                    
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <!--participants data-->
     <div class="col-md-4">
+        @Html.Partial("_ParticipantPartial", new ParticipantListVM("Участники онлайн") { Participants = Model.AliveParticipants })
+        @Html.Partial("_ParticipantPartial", new ParticipantListVM("Участники офлайн") { Participants = Model.DeadParticipants })
     </div>
 </div>
