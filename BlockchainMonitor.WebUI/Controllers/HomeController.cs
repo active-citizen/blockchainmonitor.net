@@ -73,7 +73,7 @@ namespace BlockchainMonitor.WebUI.Controllers
                     //List<TransactionVM> newTrans = trs.Select(t => _mapper.Map<TransactionVM>(t)).ToList();
 
                     var hub = GlobalHost.ConnectionManager.GetHubContext<BlockchainHub>();
-                    hub.Clients.All.newTransactions(newTrans);
+                    hub.Clients.All.updateLastTransactions(newTrans);
                 }
             });
         }
@@ -86,7 +86,7 @@ namespace BlockchainMonitor.WebUI.Controllers
                     Thread.Sleep(1000);
                     var hub = GlobalHost.ConnectionManager
                         .GetHubContext<BlockchainHub>()
-                        .Clients.All.lastBlockTransactionCount(i);
+                        .Clients.All.updateLastBlockTransactionCount(i);
                 }
             });
         }

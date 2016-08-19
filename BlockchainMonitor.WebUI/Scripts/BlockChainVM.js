@@ -1,32 +1,47 @@
 ﻿function BlockChainVM(model) {
+    var self = this;
+
     var _allBlocks = [];
-    model.AllBlocks.forEach(function (block) {
+    model.allBlocks.forEach(function (block) {
         _allBlocks.push(new BlockVM(block))
     });
     this.allBlocks = ko.observableArray(_allBlocks);
 
-    var _statistics = model.Statistics;
+    var _statistics = model.statistics;
     this.statistics = {
-        blocksCount: ko.observable(_statistics.BlocksCount),
-        transactionsCount: ko.observable(_statistics.TransactionsCount),
-        dataBaseSizeGB: ko.observable(_statistics.DataBaseSizeGB),
-        smartContractsCount: ko.observable(_statistics.SmartContractsCount),
-        validatingNodesCount: ko.observable(_statistics.ValidatingNodesCount),
-        nonValidatingNodesCount: ko.observable(_statistics.NonValidatingNodesCount),
+        blocksCount: ko.observable(_statistics.blocksCount),
+        transactionsCount: ko.observable(_statistics.transactionsCount),
+        dataBaseSizeGB: ko.observable(_statistics.dataBaseSizeGB),
+        smartContractsCount: ko.observable(_statistics.smartContractsCount),
+        validatingNodesCount: ko.observable(_statistics.validatingNodesCount),
+        nonValidatingNodesCount: ko.observable(_statistics.nonValidatingNodesCount),
     };
 
-    this.transactions = ko.observableArray(model.LastTransactions);
+    this.transactions = ko.observableArray(model.lastTransactions);
+
+    this.updateLastBlockTransactionCount = _updateLastBlockTransactionCount;
+
+    function _updateLastBlockTransactionCount(count) {
+        self.allBlocks()[self.allBlocks().length - 1].transactionsCount(count);
+    }
+
+    this.updateLastTransactions = _updateLastTransactions;
+    function _updateLastTransactions(transactions) {
+        for (var j = 0; j < transactions.length; j++) {
+            for (var i = 0; i < self.transactions.length; i++) {
+                if (self.transactions[i].Id == transactions[j].Id) {
+                    break;
+                }
+                if (i == self.transactions.length - 1)
+                {
+
+                }
+            }
+        }
+    }
 }
 
 function BlockVM(model) {
-    this.transactionsCount = ko.observable(model.TransactionsCount);
-    this.number = model.Number;
-}
-
-function lastBlockTransactionCount(count) {
-    model.allBlocks()[model.allBlocks().length - 1].transactionsCount(count);
-}
-
-function newTransactions(transactions) {
-
+    this.transactionsCount = ko.observable(model.transactionsCount);
+    this.number = model.number;
 }

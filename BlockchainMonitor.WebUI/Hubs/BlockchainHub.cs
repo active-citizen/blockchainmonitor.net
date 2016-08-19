@@ -10,7 +10,7 @@ namespace BlockchainMonitor.WebUI.Hubs
     {
         public void NewTransaction(int transactionsCount)
         {
-            Clients.All.lastBlockTransactionCount(transactionsCount);
+            Clients.All.updateLastBlockTransactionCount(transactionsCount);
         }
 
         public static BlockchainHub Instance = new BlockchainHub();

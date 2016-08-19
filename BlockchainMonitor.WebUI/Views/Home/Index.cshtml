@@ -16,8 +16,8 @@
         ko.applyBindings(model);
 
         var blockchain = $.connection.blockchainHub;
-        blockchain.client.lastBlockTransactionCount = lastBlockTransactionCount;
-        blockchain.client.newTransactions = newTransactions;
+        blockchain.client.updateLastBlockTransactionCount = model.updateLastBlockTransactionCount;
+        blockchain.client.updateLastTransactions = model.updateLastTransactions;
 
         $.connection.hub.start();
     });
@@ -112,10 +112,10 @@
                     <div class="transaction in-transition">
                         <table border="1">
                             <tr>
-                                <td data-bind="text: Id"></td>
-                                <td data-bind="text: SmartContractId"></td>
-                                <td data-bind="text: Time"></td>
-                                <td data-bind="text: Data"></td>
+                                <td data-bind="text: id"></td>
+                                <td data-bind="text: smartContractId"></td>
+                                <td data-bind="text: time"></td>
+                                <td data-bind="text: data"></td>
                             </tr>
                         </table>                    
                     </div>
