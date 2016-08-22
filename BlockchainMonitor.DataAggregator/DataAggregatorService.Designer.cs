@@ -1,6 +1,6 @@
 ﻿namespace BlockchainMonitor.DataAggregator
 {
-    partial class Service1
+    partial class DataAggregatorService
     {
         /// <summary> 
         /// Required designer variable.
