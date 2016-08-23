@@ -12,6 +12,8 @@ namespace BlockchainMonitor.WebUI
 
             ConfigureAuth(app);
             ConfigureSignalR(app);
+
+            InitializeRedisHandler(container);
         }
     }
 }

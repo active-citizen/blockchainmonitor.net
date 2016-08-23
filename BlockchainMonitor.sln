@@ -17,6 +17,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockchainMonitor.DataAcces
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockchainMonitor.Infrastructure", "BlockchainMonitor.Infrastructure\BlockchainMonitor.Infrastructure.csproj", "{58CC4DA9-CE67-4095-9117-C6B06B428EA9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockchainMonitor.RedisClient", "BlockchainMonitor.RedisClient\BlockchainMonitor.RedisClient.csproj", "{A2BD28CB-E551-412D-A37C-4DDA4CCF2947}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisTestConsoleApp", "RedisTestConsoleApp\RedisTestConsoleApp.csproj", "{0680C605-A81E-4099-9D10-1B78F2873AAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockchainMonitor.RabbitClient", "BlockchainMonitor.RabbitClient\BlockchainMonitor.RabbitClient.csproj", "{A0803051-3A88-4B19-A4B7-7EF96861EADA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockchainMonitor.Tests", "BlockchainMonitor.Tests\BlockchainMonitor.Tests.csproj", "{01F45DE1-7070-4B77-9975-C4FB6FA8EB5E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +59,22 @@ Global
 		{58CC4DA9-CE67-4095-9117-C6B06B428EA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58CC4DA9-CE67-4095-9117-C6B06B428EA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58CC4DA9-CE67-4095-9117-C6B06B428EA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2BD28CB-E551-412D-A37C-4DDA4CCF2947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2BD28CB-E551-412D-A37C-4DDA4CCF2947}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2BD28CB-E551-412D-A37C-4DDA4CCF2947}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2BD28CB-E551-412D-A37C-4DDA4CCF2947}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0680C605-A81E-4099-9D10-1B78F2873AAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0680C605-A81E-4099-9D10-1B78F2873AAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0680C605-A81E-4099-9D10-1B78F2873AAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0680C605-A81E-4099-9D10-1B78F2873AAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0803051-3A88-4B19-A4B7-7EF96861EADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0803051-3A88-4B19-A4B7-7EF96861EADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0803051-3A88-4B19-A4B7-7EF96861EADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0803051-3A88-4B19-A4B7-7EF96861EADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01F45DE1-7070-4B77-9975-C4FB6FA8EB5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01F45DE1-7070-4B77-9975-C4FB6FA8EB5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01F45DE1-7070-4B77-9975-C4FB6FA8EB5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01F45DE1-7070-4B77-9975-C4FB6FA8EB5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

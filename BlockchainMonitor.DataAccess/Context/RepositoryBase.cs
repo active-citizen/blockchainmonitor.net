@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
@@ -54,6 +55,13 @@ namespace BlockchainMonitor.DataAccess.Context
         {
             var set = dbContext.Set(typeof(TItem));
             set.Add(item);
+            dbContext.SaveChanges();
+        }
+
+        public void Insert(IEnumerable<TItem> items)
+        {
+            var set = dbContext.Set(typeof(TItem));
+            set.AddRange(items);
             dbContext.SaveChanges();
         }
 

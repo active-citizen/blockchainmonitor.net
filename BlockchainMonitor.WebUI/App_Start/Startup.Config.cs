@@ -10,6 +10,10 @@ using BlockchainMonitor.Infrastructure.AutofacModules;
 using System.Web.Mvc;
 using System.Web.Http;
 using BlockchainMonitor.WebUI.Initialization;
+using BlockchainMonitor.RedisClient.AutofacModules;
+using BlockchainMonitor.RedisClient;
+using BlockchainMonitor.WebUI.Redis;
+using System.Configuration;
 
 namespace BlockchainMonitor.WebUI
 {
@@ -24,6 +28,9 @@ namespace BlockchainMonitor.WebUI
             builder.RegisterModule(new BlockchainProvidersModule());
             builder.RegisterModule(new ParticipantMonitorModule());
 
+            builder.RegisterModule(new RedisClientModule(ConfigurationManager.AppSettings["redisHost"]));
+            builder.RegisterType<RedisHandler>().AsSelf().SingleInstance();
+
             AutoMapperInitializer.Initialize(builder, app);
 
             var container = builder.Build();
@@ -34,6 +41,11 @@ namespace BlockchainMonitor.WebUI
             app.UseAutofacMvc();
 
             return container;
+        }
+
+        void InitializeRedisHandler(IContainer container)
+        {
+            container.Resolve<RedisHandler>();
         }
     }
 }

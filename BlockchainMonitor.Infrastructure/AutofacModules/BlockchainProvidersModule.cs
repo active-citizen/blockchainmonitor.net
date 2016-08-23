@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using BlockchainMonitor.DataAccess.Context;
 using BlockchainMonitor.Infrastructure.Provider;
+using BlockchainMonitor.RedisClient.AutofacModules;
 using System;
 using System.Collections.Generic;
 using System.Linq;

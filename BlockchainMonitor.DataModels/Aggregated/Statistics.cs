@@ -19,7 +19,15 @@ namespace BlockchainMonitor.DataModels.Aggregated
         public int NonValidatingNodesCount { get; set; }
 
         public double DataBaseSizeGB { get; set; }
+    }
 
-
+    public enum StatisticsKey
+    {
+        BlocksCount,
+        TransactionsCount,
+        SmartContractsCount,
+        ValidatingNodesCount,
+        NonValidatingNodesCount,
+        DataBaseSizeGB,
     }
 }
