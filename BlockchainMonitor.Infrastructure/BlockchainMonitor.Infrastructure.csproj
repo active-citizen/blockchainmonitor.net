@@ -64,6 +64,10 @@
       <Project>{dbafdeef-9c79-458d-bef5-ba6e9401c902}</Project>
       <Name>BlockchainMonitor.DataModels</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BlockchainMonitor.RedisClient\BlockchainMonitor.RedisClient.csproj">
+      <Project>{a2bd28cb-e551-412d-a37c-4dda4ccf2947}</Project>
+      <Name>BlockchainMonitor.RedisClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

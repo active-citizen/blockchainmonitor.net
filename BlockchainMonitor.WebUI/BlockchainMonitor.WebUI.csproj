@@ -105,6 +105,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -168,9 +172,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -251,6 +252,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Redis\RedisHandler.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\HtmlHelperExtensions.cs" />
     <Compile Include="ViewModels\MainPage\BlockVM.cs" />
@@ -360,6 +362,10 @@
     <ProjectReference Include="..\BlockchainMonitor.Infrastructure\BlockchainMonitor.Infrastructure.csproj">
       <Project>{58cc4da9-ce67-4095-9117-c6b06b428ea9}</Project>
       <Name>BlockchainMonitor.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BlockchainMonitor.RedisClient\BlockchainMonitor.RedisClient.csproj">
+      <Project>{a2bd28cb-e551-412d-a37c-4dda4ccf2947}</Project>
+      <Name>BlockchainMonitor.RedisClient</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

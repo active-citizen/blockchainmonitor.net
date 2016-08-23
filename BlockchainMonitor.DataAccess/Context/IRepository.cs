@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace BlockchainMonitor.DataAccess.Context
 {
@@ -15,6 +16,7 @@ namespace BlockchainMonitor.DataAccess.Context
         TItem GetById(TId id);
 
         void Insert(TItem item);
+        void Insert(IEnumerable<TItem> items);
 
         void Update(TItem item);
     }

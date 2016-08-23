@@ -9,7 +9,7 @@ namespace BlockchainMonitor.RabbitClient
 {
     public abstract class BaseClient
     {
-        protected const string _blockchainTransaction = "Blockchain.Transaction";
+        protected const string _blockchainQueue = "Blockchain.Main";
 
         protected void EnsureQueue(IModel channel, string queueName)
         {

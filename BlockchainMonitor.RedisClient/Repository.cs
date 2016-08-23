@@ -11,13 +11,13 @@ using BlockchainMonitor.DataModels.Participants;
 
 namespace BlockchainMonitor.RedisClient
 {
-    public class Repository
+    public class Repository : IRepository
     {
         private readonly ConnectionMultiplexer _connectionMultiplexer;
-        const string _lastTransactions = "lastTransactions";
-        const string _lastBlocks = "lastBlocks";
-        const string _aliveParticipants = "aliveParticipants";
-        const string _deadParticipants = "deadParticipants";
+        public const string LastTransactions = "lastTransactions";
+        public const string LastBlocks = "lastBlocks";
+        public const string AliveParticipants = "aliveParticipants";
+        public const string DeadParticipants = "deadParticipants";
         public Repository(ConnectionMultiplexer connectionMultiplexer)
         {
             _connectionMultiplexer = connectionMultiplexer;
@@ -68,32 +68,32 @@ namespace BlockchainMonitor.RedisClient
 
         public List<Transaction> GetLastTransactions()
         {
-            return GetObject<List<Transaction>>(_lastTransactions);
+            return GetObject<List<Transaction>>(LastTransactions);
         }
 
         public void SetLastTransactions(List<Transaction> transactions)
         {
-            SetObject(transactions, _lastTransactions);
+            SetObject(transactions, LastTransactions);
         }
 
         public List<Block> GetLastBlocks()
         {
-            return GetObject<List<Block>>(_lastBlocks);
+            return GetObject<List<Block>>(LastBlocks);
         }
 
         public void SetLastBlocks(List<Block> blocks)
         {
-            SetObject(blocks, _lastBlocks);
+            SetObject(blocks, LastBlocks);
         }
 
         public List<Participant> GetParticipants(bool alive)
         {
-            return GetObject<List<Participant>>(alive ? _aliveParticipants : _deadParticipants);
+            return GetObject<List<Participant>>(alive ? AliveParticipants : DeadParticipants);
         }
 
         public void SetAliveParticipants(List<Participant> participants, bool alive)
         {
-            SetObject(participants, alive ? _aliveParticipants : _deadParticipants);
+            SetObject(participants, alive ? AliveParticipants : DeadParticipants);
         }
 
         private T GetObject<T>(string key) where T : class

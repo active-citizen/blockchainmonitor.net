@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RabbitMQ.Client;
 using BlockchainMonitor.DataModels.Blockchain;
 using Newtonsoft.Json;
+using BlockchainMonitor.RabbitClient.Model;
 
 namespace BlockchainMonitor.RabbitClient
 {
@@ -17,19 +18,26 @@ namespace BlockchainMonitor.RabbitClient
             _factory = factory;
         }
 
-        public void AddTransaction(Transaction transaction)
+        public void PublishMessage<T>(T obj)
         {
             using (var connection = _factory.CreateConnection())
             {
                 using (var channel = connection.CreateModel())
                 {
-                    EnsureQueue(channel, _blockchainTransaction);
+                    EnsureQueue(channel, _blockchainQueue);
 
-                    string json = JsonConvert.SerializeObject(transaction);
+                    var message = new RabbitMessage
+                    {
+                        JsonObject = JsonConvert.SerializeObject(obj),
+                        ObjType = typeof(T),
+                    };
+
+                    var json = JsonConvert.SerializeObject(message);
+
                     var body = Encoding.UTF8.GetBytes(json);
 
                     channel.BasicPublish(   exchange: "",
-                                            routingKey: _blockchainTransaction,
+                                            routingKey: _blockchainQueue,
                                             basicProperties: null,
                                             body: body);
                 }

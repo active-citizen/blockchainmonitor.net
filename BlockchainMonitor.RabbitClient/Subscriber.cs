@@ -1,4 +1,7 @@
-﻿using BlockchainMonitor.DataModels.Blockchain;
+﻿using Autofac;
+using BlockchainMonitor.DataModels.Blockchain;
+using BlockchainMonitor.RabbitClient;
+using BlockchainMonitor.RabbitClient.Model;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -14,39 +17,66 @@ namespace BlockchainMonitor.RabbitClient
     public class Subscriber : BaseClient, ISubscriber
     {
         private readonly IConnectionFactory _factory;
-        public Subscriber(IConnectionFactory factory)
+        private readonly IContainer _container;
+        private IConnection _connection;
+        private IModel _channel;
+        private EventingBasicConsumer _consumer;
+
+        public Subscriber(IConnectionFactory factory, IContainer container)
         {
             _factory = factory;
+            _container = container;
         }
 
-        public Task Start()
+        private void Connect()
         {
-            Task task = new Task(() =>
-            {
-                using (var connection = _factory.CreateConnection())
-                {
-                    using (var channel = connection.CreateModel())
-                    {
-                        EnsureQueue(channel, _blockchainTransaction);
+            _connection = _factory.CreateConnection();
+            _channel = _connection.CreateModel();
 
-                        var consumer = new EventingBasicConsumer(channel);
-                        consumer.Received += (model, ea) =>
-                        {
-                            var body = ea.Body;
-                            string json = Encoding.UTF8.GetString(body);
-                            var transaction = JsonConvert.DeserializeObject<Transaction>(json);
+            EnsureQueue(_channel, _blockchainQueue);
 
-                            TransactionReceived(transaction);
-                        };
-                        Thread.Sleep(10000000);
-                    }
-                }
-            });
-            return task;
+            _consumer = new EventingBasicConsumer(_channel);
+            _consumer.Received += MessageReceivedInternal;
+
+            _channel.BasicConsume(queue: _blockchainQueue,
+                                    noAck: false,
+                                    consumer: _consumer);
         }
 
-        public delegate void GetTransactionDelegate(Transaction transaction);
+        private void MessageReceivedInternal(object sender, BasicDeliverEventArgs args)
+        {
+            try
+            {
+                var body = args.Body;
+                string json = Encoding.UTF8.GetString(body);
+                var message = JsonConvert.DeserializeObject<RabbitMessage>(json);
 
-        public event GetTransactionDelegate TransactionReceived;
+                var handlerType = typeof(IMessageHandler<>).MakeGenericType(message.ObjType);
+                if (!_container.IsRegistered(handlerType)) return;
+
+                var handler = _container.Resolve(handlerType);
+                handler.GetType().InvokeMember("Handle", 
+                                                System.Reflection.BindingFlags.InvokeMethod,
+                                                null,
+                                                handler,
+                                                new object [] { JsonConvert.DeserializeObject(
+                                                                    message.JsonObject,
+                                                                    message.ObjType)});
+            }
+            catch (Exception ex)
+            {
+                //TODO: log this error
+            }
+            finally
+            {
+                //TODO: manage poison messages
+                _channel.BasicAck(args.DeliveryTag, false);
+            }
+        }
+
+        public void Start()
+        {
+            Connect();
+        }
     }
 }

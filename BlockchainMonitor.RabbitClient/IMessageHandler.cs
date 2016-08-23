@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BlockchainMonitor.RabbitClient
 {
-    public interface ISubscriber
+    public interface IMessageHandler<T> where T : class
     {
-        void Start();
+        void Handle(T message);
     }
 }

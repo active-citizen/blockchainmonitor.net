@@ -7,26 +7,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BlockchainMonitor.DataModels.Participants;
+using BlockchainMonitor.RedisClient;
 
 namespace BlockchainMonitor.Infrastructure.Provider
 {
     public class BlockchainProvider : IBlockchainProvider
     {
-        private readonly IBlockchainDbContext blockchainDbContext;
+        private readonly IBlockchainDbContext _blockchainDbContext;
+        private readonly IRepository _redis;
 
-        public BlockchainProvider(IBlockchainDbContext blockchainDbContext)
+        public BlockchainProvider(IBlockchainDbContext blockchainDbContext, IRepository redis)
         {
-            this.blockchainDbContext = blockchainDbContext;
+            _blockchainDbContext = blockchainDbContext;
+            _redis = redis;
         }
 
         public List<Block> GetAllBlocks()
         {
-            return blockchainDbContext.Blocks.GetAll().ToList();
+            return _blockchainDbContext.Blocks.GetAll().ToList();
         }
 
         public List<Transaction> GetLastTransactions()
         {
-            return blockchainDbContext.Transactions.GetAll().OrderByDescending(t => t.Id).Take(10).ToList();
+            //return _blockchainDbContext.Transactions.GetAll().OrderByDescending(t => t.Id).Take(10).ToList();
+            return _redis.GetLastTransactions();
         }
 
         public Statistics GetAllStatistics()
@@ -45,7 +49,7 @@ namespace BlockchainMonitor.Infrastructure.Provider
 
         public List<Participant> GetAllParticipants()
         {
-            return blockchainDbContext.Participants.GetAll().ToList();
+            return _blockchainDbContext.Participants.GetAll().ToList();
         }
     }
 }

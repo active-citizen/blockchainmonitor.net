@@ -20,7 +20,8 @@ namespace BlockchainMonitor.WebUI
             var serializer =
                 JsonSerializer.Create(new JsonSerializerSettings()
                 {
-                    ContractResolver = new SignalRContractResolver()
+                    ContractResolver = new SignalRContractResolver(),
+                    NullValueHandling = NullValueHandling.Include,
                 });
 
             GlobalHost.DependencyResolver.Register(typeof(JsonSerializer), 

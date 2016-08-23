@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{EEB8E2F7-FEB0-4761-B742-EE6B6B25AC2C}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BlockchainMonitor.DataAggregator</RootNamespace>
     <AssemblyName>BlockchainMonitor.DataAggregator</AssemblyName>
@@ -32,13 +32,18 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.0.0\lib\net451\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,16 +61,34 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RabbitHandler\TransactionHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BlockchainMonitor.DataAccess\BlockchainMonitor.DataAccess.csproj">
+      <Project>{c7ad0005-4194-4f57-9e23-e9a0a7417a8d}</Project>
+      <Name>BlockchainMonitor.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BlockchainMonitor.DataModels\BlockchainMonitor.DataModels.csproj">
+      <Project>{dbafdeef-9c79-458d-bef5-ba6e9401c902}</Project>
+      <Name>BlockchainMonitor.DataModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BlockchainMonitor.RabbitClient\BlockchainMonitor.RabbitClient.csproj">
       <Project>{a0803051-3a88-4b19-a4b7-7ef96861eada}</Project>
       <Name>BlockchainMonitor.RabbitClient</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BlockchainMonitor.RedisClient\BlockchainMonitor.RedisClient.csproj">
+      <Project>{a2bd28cb-e551-412d-a37c-4dda4ccf2947}</Project>
+      <Name>BlockchainMonitor.RedisClient</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DataAggregatorService.resx">
+      <DependentUpon>DataAggregatorService.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
