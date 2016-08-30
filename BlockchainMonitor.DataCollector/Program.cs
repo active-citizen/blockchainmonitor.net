@@ -17,7 +17,7 @@ namespace BlockchainMonitor.DataCollector
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new Service1()
+                new DataCollectorService()
             };
             ServiceBase.Run(ServicesToRun);
         }

@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlockchainMonitor.RabbitClient
+namespace BlockchainMonitor.DataCollector
 {
-    public interface ISubscriber
+    class BlockchainAPIClient
     {
-        void Start();
-        void Stop();
     }
 }

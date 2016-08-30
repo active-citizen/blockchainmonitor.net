@@ -82,7 +82,7 @@ textarea {
     width: 200px;
 }
 
-.transactions-list .in-transition {
+.transactions-list .transaction.in-transition {
     height: 0px;
 }
 

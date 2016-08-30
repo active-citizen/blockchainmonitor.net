@@ -101,7 +101,7 @@ namespace BlockchainMonitor.RedisClient
             IDatabase data = _connectionMultiplexer.GetDatabase();
 
             var json = data.StringGet(key);
-            var values = JsonConvert.DeserializeObject<T>(json);
+            var values = !json.IsNull ? JsonConvert.DeserializeObject<T>(json) : null;
 
             return values;
         }

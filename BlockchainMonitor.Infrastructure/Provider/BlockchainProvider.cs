@@ -29,8 +29,7 @@ namespace BlockchainMonitor.Infrastructure.Provider
 
         public List<Transaction> GetLastTransactions()
         {
-            //return _blockchainDbContext.Transactions.GetAll().OrderByDescending(t => t.Id).Take(10).ToList();
-            return _redis.GetLastTransactions();
+            return _redis.GetLastTransactions() ?? new List<Transaction>();
         }
 
         public Statistics GetAllStatistics()

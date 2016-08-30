@@ -48,7 +48,9 @@
 
     this.animateTransactions = _animateTransactions;
     function _animateTransactions() {
-        $('.transactions-list .transaction.in-transition').toggleClass('in-transition');
+        setTimeout(function () {
+            $('.transactions-list .transaction.in-transition').toggleClass('in-transition');
+        }, 20);
     }
 }
 

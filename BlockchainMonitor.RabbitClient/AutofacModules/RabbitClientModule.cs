@@ -12,7 +12,12 @@ namespace BlockchainMonitor.RabbitClient.AutofacModules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ConnectionFactory>().As<IConnectionFactory>();
+            builder.RegisterInstance(new ConnectionFactory()
+            {
+                AutomaticRecoveryEnabled = true,
+                NetworkRecoveryInterval = new TimeSpan(10000),
+            }
+            ).As<IConnectionFactory>();
 
             builder.RegisterType<Publisher>().As<IPublisher>();
             builder.RegisterType<Subscriber>().As<ISubscriber>();

@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace BlockchainMonitor.DataCollector
 {
-    public partial class Service1 : ServiceBase
+    public partial class DataCollectorService : ServiceBase
     {
-        public Service1()
+        public DataCollectorService()
         {
             InitializeComponent();
         }

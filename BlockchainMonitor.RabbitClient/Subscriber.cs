@@ -5,6 +5,7 @@ using BlockchainMonitor.RabbitClient.Model;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using RabbitMQ.Client.Framing.Impl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace BlockchainMonitor.RabbitClient
     {
         private readonly IConnectionFactory _factory;
         private readonly IContainer _container;
-        private IConnection _connection;
+        private AutorecoveringConnection _connection;
         private IModel _channel;
         private EventingBasicConsumer _consumer;
 
@@ -28,19 +29,14 @@ namespace BlockchainMonitor.RabbitClient
             _container = container;
         }
 
-        private void Connect()
+        private void Recovery(object sender, EventArgs e)
         {
-            _connection = _factory.CreateConnection();
-            _channel = _connection.CreateModel();
+            //TODO: log
+        }
 
-            EnsureQueue(_channel, _blockchainQueue);
-
-            _consumer = new EventingBasicConsumer(_channel);
-            _consumer.Received += MessageReceivedInternal;
-
-            _channel.BasicConsume(queue: _blockchainQueue,
-                                    noAck: false,
-                                    consumer: _consumer);
+        private void ConnectionShutdown(object sender, ShutdownEventArgs e)
+        {
+            //TODO: log
         }
 
         private void MessageReceivedInternal(object sender, BasicDeliverEventArgs args)
@@ -54,16 +50,11 @@ namespace BlockchainMonitor.RabbitClient
                 var handlerType = typeof(IMessageHandler<>).MakeGenericType(message.ObjType);
                 if (!_container.IsRegistered(handlerType)) return;
 
-                var handler = _container.Resolve(handlerType);
-                handler.GetType().InvokeMember("Handle", 
-                                                System.Reflection.BindingFlags.InvokeMethod,
-                                                null,
-                                                handler,
-                                                new object [] { JsonConvert.DeserializeObject(
-                                                                    message.JsonObject,
-                                                                    message.ObjType)});
+                var handler = (IMessageHandler)_container.Resolve(handlerType);
+                handler.Handle(JsonConvert.DeserializeObject(message.JsonObject,
+                                                             message.ObjType));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //TODO: log this error
             }
@@ -76,7 +67,46 @@ namespace BlockchainMonitor.RabbitClient
 
         public void Start()
         {
-            Connect();
+            _connection = (AutorecoveringConnection)_factory.CreateConnection();
+            _connection.ConnectionShutdown += ConnectionShutdown;
+            _connection.Recovery += Recovery;
+
+            _channel = _connection.CreateModel();
+
+            EnsureQueue(_channel, _blockchainQueue);
+
+            _consumer = new EventingBasicConsumer(_channel);
+            _consumer.Received += MessageReceivedInternal;
+
+            _channel.BasicConsume(queue: _blockchainQueue,
+                                    noAck: false,
+                                    consumer: _consumer);
+        }
+
+        public void Stop()
+        {
+            try
+            {
+                if (_connection != null)
+                {
+                    _connection.ConnectionShutdown -= ConnectionShutdown;
+                    _connection.Recovery -= Recovery;
+                }
+
+                if (_consumer != null) _consumer.Received -= MessageReceivedInternal;
+            }
+            finally
+            {
+                try
+                {
+                    _channel?.Dispose();
+                }
+                finally
+                {
+                    ((IDisposable)_connection)?.Dispose();
+                }
+            }
+
         }
     }
 }

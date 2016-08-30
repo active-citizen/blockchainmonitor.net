@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace BlockchainMonitor.Tests.Data
 {
-    class TransactionHandler : IMessageHandler<Transaction>
+    class TransactionHandler : MessageHandlerBase<Transaction>
     {
-        public void Handle(Transaction message)
+        public override void Handle(Transaction message)
         {
             Transactions.Add(message);
         }

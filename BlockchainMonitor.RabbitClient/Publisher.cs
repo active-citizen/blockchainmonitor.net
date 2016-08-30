@@ -35,10 +35,12 @@ namespace BlockchainMonitor.RabbitClient
                     var json = JsonConvert.SerializeObject(message);
 
                     var body = Encoding.UTF8.GetBytes(json);
+                    var properties = channel.CreateBasicProperties();
+                    properties.Persistent = true;
 
                     channel.BasicPublish(   exchange: "",
                                             routingKey: _blockchainQueue,
-                                            basicProperties: null,
+                                            basicProperties: properties,
                                             body: body);
                 }
             }
