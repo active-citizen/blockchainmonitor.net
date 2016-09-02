@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlockchainMonitor.Tests.Data
+namespace BlockchainMonitor.TestData
 {
-    class Examples
+    public class Examples
     {
         static Random _rnd = new Random((int)DateTime.Now.Ticks);
         public static Transaction RandomTransaction
@@ -23,5 +23,6 @@ namespace BlockchainMonitor.Tests.Data
                 return tr;
             }
         }
+
     }
 }

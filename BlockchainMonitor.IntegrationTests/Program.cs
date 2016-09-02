@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlockchainMonitor.IntegrationTests.Transactions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,14 @@ namespace BlockchainMonitor.IntegrationTests
     {
         static void Main(string[] args)
         {
+            if (args?.Length == 0) return;
+            switch (args[0])
+            {
+                case "add_transactions":
+                    var test = new TransactionTest();
+                    test.AddRandomTransactions(args.Length > 1 ? Int32.Parse(args[1]) : 3);
+                    break;
+            }
         }
     }
 }

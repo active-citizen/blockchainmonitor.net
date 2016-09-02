@@ -8,24 +8,24 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+<body class="blockchain-body">
+    <div class="navbar navbar-fixed-top blockchain-header-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <div class="navbar-header blockchain-header">
+                <button type="button" class="navbar-toggle blockchain-header-button" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Блокчейн монитор", "Index", "Home", new { area = "" }, new { @class = "navbar-brand blockchain-logo" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Главная", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Графики", "Index", "Graphics")</li>
-                    <li>@Html.ActionLink("Статистика", "Index", "Statistics")</li>
-                    <li>@Html.ActionLink("Участники", "Index", "Participants")</li>
-                    <li>@Html.ActionLink("Смартконтракты", "Index", "SmartContracts")</li>
+            <div class="navbar-collapse collapse blockchain-main-menu">
+                <ul class="nav navbar-nav blockchain-main-menu-navbar">
+                    <li>@Html.ActionLink("Главная", "Index", "Home", new { @class = "blockchain-menu-item"})</li>
+                    <li>@Html.ActionLink("Графики", "Index", "Graphics", new { @class = "blockchain-menu-item" })</li>
+                    <li>@Html.ActionLink("Статистика", "Index", "Statistics", new { @class = "blockchain-menu-item" })</li>
+                    <li>@Html.ActionLink("Участники", "Index", "Participants", new { @class = "blockchain-menu-item" })</li>
+                    <li>@Html.ActionLink("Смартконтракты", "Index", "SmartContracts", new { @class = "blockchain-menu-item" })</li>
                 </ul>
                 @Html.Partial("_Search")
             </div>
@@ -47,6 +47,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/signalr")
+    @Scripts.Render("~/bundles/carousel")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

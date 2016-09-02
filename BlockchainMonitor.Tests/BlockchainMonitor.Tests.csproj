@@ -60,7 +60,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Data\Examples.cs" />
     <Compile Include="Data\TransactionHandler.cs" />
     <Compile Include="RabbitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,6 +73,10 @@
     <ProjectReference Include="..\BlockchainMonitor.RabbitClient\BlockchainMonitor.RabbitClient.csproj">
       <Project>{a0803051-3a88-4b19-a4b7-7ef96861eada}</Project>
       <Name>BlockchainMonitor.RabbitClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BlockchainMonitor.TestData\BlockchainMonitor.TestData.csproj">
+      <Project>{02e6b374-9cf3-410a-a598-3faaed9008c7}</Project>
+      <Name>BlockchainMonitor.TestData</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

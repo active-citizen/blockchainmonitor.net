@@ -30,31 +30,47 @@
     <!--monitoring data-->
     <div class="col-md-8">
         <!--blocks-->
-        <hr />
         <div class="row">
-            <h3 class="pull-left">Блоки транзакций блокчейн базы данных</h3>
-            <!--blocks navigation buttons-->
-            <div class="pull-right">
-                <div class="btn-group" role="group" aria-label="All Blocks">
-                    <button type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-                    </button>
-                    <button type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-                    </button>
+            <div class="blockchain-container">
+                <div class="blockchain-line">
+                    <div class="row">
+                        <div class="col-xs-9">
+                            <h3 class="pull-left blockchain-h3">Блоки транзакций системы блокчейн</h3>
+                            <!--blocks navigation buttons-->
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="pull-right blockchain-navigation-buttons">
+                                <div class="btn-group" role="group" aria-label="All Blocks">
+                                    <button type="button" class="btn btn-default" onclick="carouselPrev('#blocksCarousel')">
+                                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-default" onclick="carouselNext('#blocksCarousel')">
+                                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <!--blocks-->
-            <!--ВЕРСТАЛЬЩИКУ: сделать эти блоки прокручиваемыми направо-->
-            <div data-bind="foreach: allBlocks" class="all_block">
-                <div class="external_block pull-left">
-                    <div class="internal_block text_white">
-                        <div class="text-center">Блок №</div>
-                        <div data-bind="text: number" class="text-center"></div><br />
-                        <div class="text-center">Всего транзакций</div>
-                        <div data-bind="text: transactionsCount" class="text-center"></div><br />                        
+            <div class="blockchain-container">
+                <div id="blocksCarousel"
+                     class="blockchain-carousel"
+                     data-bind="owlCarousel: { data: allBlocks, owlOptions: { pagination: false, navigation: false, rewindNav: false } }">
+                    <div class="external-block pull-left">
+                        <div class="internal-block-1">
+                            <div class="internal-block-2">
+                                <div class="internal-block-3 text-white">
+                                    <div class="text-center">Блок №</div>
+                                    <div data-bind="text: number" class="text-center"></div><br />
+                                    <div class="text-center">Всего транзакций</div>
+                                    <div data-bind="text: transactionsCount" class="text-center"></div><br />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
