@@ -32,7 +32,7 @@ textarea {
 }
 
 .external-block {
-    padding:10px;
+    padding: 20px 40px;
 }
 
 .internal-block-1 {
@@ -50,8 +50,8 @@ textarea {
 .internal-block-3 {
     border-radius:15px;
     background-color: #2a9dff;
-    height:120px;
-    width:120px;
+    height:110px;
+    width:110px;
 }
 
 .text-white {
