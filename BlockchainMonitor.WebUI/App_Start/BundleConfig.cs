@@ -25,11 +25,19 @@ namespace BlockchainMonitor.WebUI
 
             //signalr
             bundles.Add(new ScriptBundle("~/bundles/signalr").Include(
-                        "~/Scripts/jquery.signalR-{version}.js"));      
+                        "~/Scripts/jquery.signalR-{version}.js"));
+
+            //owl
+            bundles.Add(new ScriptBundle("~/bundles/carousel").Include(
+                        "~/Scripts/owl.carousel.js",
+                        "~/Scripts/knockout-owlCarousel.js"
+                        ));
 
             //custom scripts
             bundles.Add(new ScriptBundle("~/bundles/appscripts").Include(
-                      "~/Scripts/BlockChainVM.js"));
+                      "~/Scripts/BlockChainVM.js",
+                      "~/Scripts/BlockChainOwlCarousel.js"
+                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
@@ -37,7 +45,10 @@ namespace BlockchainMonitor.WebUI
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/OwlCarousel/owl.carousel.css",
+                      "~/Content/OwlCarousel/owl.theme.css"
+                      ));
         }
     }
 }

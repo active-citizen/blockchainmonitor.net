@@ -39,7 +39,7 @@
 
         var newLength = self.transactions.unshift.apply(self.transactions, newTransactions);
 
-        const maxLength = 8;
+        const maxLength = 10;
         if (newLength <= maxLength) return;
         self.transactions.splice(maxLength, newLength - maxLength);
 

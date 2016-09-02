@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Autofac;
 using System.Threading;
 using System.Collections.Generic;
+using BlockchainMonitor.TestData;
 
 namespace BlockchainMonitor.Tests
 {
