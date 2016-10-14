@@ -1,0 +1,4 @@
+language: csharp
+solution: BlockchainMonitor.sln
+install:
+  - nuget restore BlockchainMonitor.sln
