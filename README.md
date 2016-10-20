@@ -5,7 +5,6 @@
 [![Build Status](https://travis-ci.org/active-citizen/blockchainmonitor.net.svg?branch=develop)](https://travis-ci.org/active-citizen/blockchainmonitor.net)
 [![Build status](https://ci.appveyor.com/api/projects/status/oqsbihat3cw2r016?svg=true)](https://ci.appveyor.com/project/antifrizz52/blockchainmonitor-net)
 
-### About project
 
 The BlockchainMonitor.NET - is an open source monitoring solution for [ActiveCitizen Blockchain](http://blockchain.ag.mos.ru) based on the [Hyperledger Project](https://www.hyperledger.org/) that allows you to view information about blocks, transactions and associated data, smart contracts and any other relevant information.
 
