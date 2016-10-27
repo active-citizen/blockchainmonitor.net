@@ -19,7 +19,7 @@ namespace BlockchainMonitor.RabbitClient
     {
         private readonly IConnectionFactory _factory;
         private readonly IContainer _container;
-        private AutorecoveringConnection _connection;
+        private IConnection _connection;
         private IModel _channel;
         private EventingBasicConsumer _consumer;
 
@@ -67,10 +67,21 @@ namespace BlockchainMonitor.RabbitClient
 
         public void Start()
         {
-            _connection = (AutorecoveringConnection)_factory.CreateConnection();
-            _connection.ConnectionShutdown += ConnectionShutdown;
-            _connection.Recovery += Recovery;
+            var connection = _factory.CreateConnection();
 
+            _connection = connection as AutorecoveringConnection;
+
+            if (_connection != null)
+            {
+                ((AutorecoveringConnection)_connection).Recovery += Recovery;
+            }
+            else
+            {
+                _connection = (Connection)connection;
+            }
+
+            _connection.ConnectionShutdown += ConnectionShutdown;
+            
             _channel = _connection.CreateModel();
 
             EnsureQueue(_channel, _blockchainQueue);
@@ -90,7 +101,9 @@ namespace BlockchainMonitor.RabbitClient
                 if (_connection != null)
                 {
                     _connection.ConnectionShutdown -= ConnectionShutdown;
-                    _connection.Recovery -= Recovery;
+
+                    if(_connection is AutorecoveringConnection)
+                        ((AutorecoveringConnection)_connection).Recovery -= Recovery;
                 }
 
                 if (_consumer != null) _consumer.Received -= MessageReceivedInternal;
