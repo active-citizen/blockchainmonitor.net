@@ -9,7 +9,7 @@ namespace BlockchainMonitor.DataAccess.Context
 
         IRepository<int, Node> Nodes { get; }
 
-        IRepository<int, Block> Blocks { get; }
+        IRepository<long, Block> Blocks { get; }
 
         IRepository<int, SmartContract> SmartContracts { get; }
 

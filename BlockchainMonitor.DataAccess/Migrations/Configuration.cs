@@ -11,13 +11,13 @@ namespace BlockchainMonitor.DataAccess.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(BlockchainMonitor.DataAccess.Context.BlockchainDbContext context)
         {
             DefaultPartners(context);
-            SampleBlocks(context);
+            //SampleBlocks(context);
         }
     }
 }

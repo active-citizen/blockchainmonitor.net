@@ -2,6 +2,7 @@
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace BlockchainMonitor.RabbitClient.AutofacModules
         {
             builder.RegisterInstance(new ConnectionFactory()
             {
+                HostName = ConfigurationManager.AppSettings["rabbitHost"],
                 AutomaticRecoveryEnabled = true,
                 NetworkRecoveryInterval = new TimeSpan(10000),
             }

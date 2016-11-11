@@ -110,111 +110,111 @@ namespace BlockchainMonitor.DataAccess.Migrations
             context.Set<Participant>().AddOrUpdate(p => p.Name, par);
         }
 
-        void SampleBlocks(BlockchainMonitor.DataAccess.Context.BlockchainDbContext context)
-        {
-            Block bl = new Block()
-            {
-                Number = 1,
-                Hash = "sdfgsfgiuh",
-                IsClosed = true,
-            };
-            SmartContract sc = new SmartContract()
-            {
-                ChainCode = new byte[] { 123, 234, 45, 34 },
-                ChainCodeId = new byte[] { 123, 234, 45, 34 },
-            };
-            Transaction tr1 = new Transaction()
-            {
-                Data = new byte[] { 123, 234, 45, 34 },
-                Time = DateTime.Now,
-                Block = bl,
-                SmartContract = sc,
-                Id = "agjhgkjhgqweruyg",
-            };
-            Transaction tr2 = new Transaction()
-            {
-                Data = new byte[] { 123, 234, 45, 34 },
-                Time = DateTime.Now,
-                Block = bl,
-                SmartContract = sc,
-                Id = "agjhgkjhgasdfasdfruyg",
-            };
-            bl.Transactions = sc.Transactions = new List<Transaction>() { tr1, tr2 };
-            context.Set<Block>().AddOrUpdate(b => b.Hash, bl);
-            context.Set<SmartContract>().AddOrUpdate(c => c.ChainCodeId, sc);
+        //void SampleBlocks(BlockchainMonitor.DataAccess.Context.BlockchainDbContext context)
+        //{
+        //    Block bl = new Block()
+        //    {
+        //        Number = 1,
+        //        Hash = "sdfgsfgiuh",
+        //        IsClosed = true,
+        //    };
+        //    SmartContract sc = new SmartContract()
+        //    {
+        //        ChainCode = new byte[] { 123, 234, 45, 34 },
+        //        ChainCodeId = new byte[] { 123, 234, 45, 34 },
+        //    };
+        //    Transaction tr1 = new Transaction()
+        //    {
+        //        Data = new byte[] { 123, 234, 45, 34 },
+        //        Time = DateTime.Now,
+        //        Block = bl,
+        //        SmartContract = sc,
+        //        Id = "agjhgkjhgqweruyg",
+        //    };
+        //    Transaction tr2 = new Transaction()
+        //    {
+        //        Data = new byte[] { 123, 234, 45, 34 },
+        //        Time = DateTime.Now,
+        //        Block = bl,
+        //        SmartContract = sc,
+        //        Id = "agjhgkjhgasdfasdfruyg",
+        //    };
+        //    bl.Transactions = sc.Transactions = new List<Transaction>() { tr1, tr2 };
+        //    context.Set<Block>().AddOrUpdate(b => b.Hash, bl);
+        //    context.Set<SmartContract>().AddOrUpdate(c => c.ChainCodeId, sc);
 
-            bl = new Block()
-            {
-                Number = 2,
-                Hash = "sdfhhg678sfgiuh",
-                IsClosed = true,
-            };
-            tr1 = new Transaction()
-            {
-                Data = new byte[] { 123, 234, 45, 34 },
-                Time = DateTime.Now,
-                Block = bl,
-                SmartContract = sc,
-                Id = "agjhg734gqweruyg",
-            };
-            tr2 = new Transaction()
-            {
-                Data = new byte[] { 123, 234, 45, 34 },
-                Time = DateTime.Now,
-                Block = bl,
-                SmartContract = sc,
-                Id = "agjhgkjhgahjkd7g",
-            };
-            bl.Transactions = sc.Transactions = new List<Transaction>() { tr1, tr2 };
-            context.Set<Block>().AddOrUpdate(b => b.Hash, bl);
+        //    bl = new Block()
+        //    {
+        //        Number = 2,
+        //        Hash = "sdfhhg678sfgiuh",
+        //        IsClosed = true,
+        //    };
+        //    tr1 = new Transaction()
+        //    {
+        //        Data = new byte[] { 123, 234, 45, 34 },
+        //        Time = DateTime.Now,
+        //        Block = bl,
+        //        SmartContract = sc,
+        //        Id = "agjhg734gqweruyg",
+        //    };
+        //    tr2 = new Transaction()
+        //    {
+        //        Data = new byte[] { 123, 234, 45, 34 },
+        //        Time = DateTime.Now,
+        //        Block = bl,
+        //        SmartContract = sc,
+        //        Id = "agjhgkjhgahjkd7g",
+        //    };
+        //    bl.Transactions = sc.Transactions = new List<Transaction>() { tr1, tr2 };
+        //    context.Set<Block>().AddOrUpdate(b => b.Hash, bl);
 
-            bl = new Block()
-            {
-                Number = 3,
-                Hash = "sdfhhg676ghjuh",
-                IsClosed = true,
-            };
-            tr1 = new Transaction()
-            {
-                Data = new byte[] { 123, 234, 45, 34 },
-                Time = DateTime.Now,
-                Block = bl,
-                SmartContract = sc,
-                Id = "ag422qweruyg",
-            };
-            tr2 = new Transaction()
-            {
-                Data = new byte[] { 123, 234, 45, 34 },
-                Time = DateTime.Now,
-                Block = bl,
-                SmartContract = sc,
-                Id = "atyur8gahjkd7g",
-            };
-            bl.Transactions = sc.Transactions = new List<Transaction>() { tr1, tr2 };
-            context.Set<Block>().AddOrUpdate(b => b.Hash, bl);
+        //    bl = new Block()
+        //    {
+        //        Number = 3,
+        //        Hash = "sdfhhg676ghjuh",
+        //        IsClosed = true,
+        //    };
+        //    tr1 = new Transaction()
+        //    {
+        //        Data = new byte[] { 123, 234, 45, 34 },
+        //        Time = DateTime.Now,
+        //        Block = bl,
+        //        SmartContract = sc,
+        //        Id = "ag422qweruyg",
+        //    };
+        //    tr2 = new Transaction()
+        //    {
+        //        Data = new byte[] { 123, 234, 45, 34 },
+        //        Time = DateTime.Now,
+        //        Block = bl,
+        //        SmartContract = sc,
+        //        Id = "atyur8gahjkd7g",
+        //    };
+        //    bl.Transactions = sc.Transactions = new List<Transaction>() { tr1, tr2 };
+        //    context.Set<Block>().AddOrUpdate(b => b.Hash, bl);
 
-            bl = new Block()
-            {
-                Number = 4,
-                Hash = "787987j7ghjuh",
-                IsClosed = true,
-            };
-            sc = new SmartContract()
-            {
-                ChainCode = new byte[] { 13, 234, 55, 34 },
-                ChainCodeId = new byte[] { 13, 23, 5, 134 },
-            };
-            tr1 = new Transaction()
-            {
-                Data = new byte[] { 123, 234, 45, 34 },
-                Time = DateTime.Now,
-                Block = bl,
-                SmartContract = sc,
-                Id = "ag422945ruyg",
-            };
-            bl.Transactions = sc.Transactions = new List<Transaction>() { tr1 };
-            context.Set<Block>().AddOrUpdate(b => b.Hash, bl);
-            context.Set<SmartContract>().AddOrUpdate(c => c.ChainCodeId, sc);
-        }
+        //    bl = new Block()
+        //    {
+        //        Number = 4,
+        //        Hash = "787987j7ghjuh",
+        //        IsClosed = true,
+        //    };
+        //    sc = new SmartContract()
+        //    {
+        //        ChainCode = new byte[] { 13, 234, 55, 34 },
+        //        ChainCodeId = new byte[] { 13, 23, 5, 134 },
+        //    };
+        //    tr1 = new Transaction()
+        //    {
+        //        Data = new byte[] { 123, 234, 45, 34 },
+        //        Time = DateTime.Now,
+        //        Block = bl,
+        //        SmartContract = sc,
+        //        Id = "ag422945ruyg",
+        //    };
+        //    bl.Transactions = sc.Transactions = new List<Transaction>() { tr1 };
+        //    context.Set<Block>().AddOrUpdate(b => b.Hash, bl);
+        //    context.Set<SmartContract>().AddOrUpdate(c => c.ChainCodeId, sc);
+        //}
     }
 }

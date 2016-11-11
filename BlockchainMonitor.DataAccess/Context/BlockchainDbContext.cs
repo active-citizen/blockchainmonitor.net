@@ -9,7 +9,7 @@ namespace BlockchainMonitor.DataAccess.Context
     {
         private readonly IRepository<int, Participant> _participants;
         private readonly IRepository<int, Node> _nodes;
-        private readonly IRepository<int, Block> _blocks;
+        private readonly IRepository<long, Block> _blocks;
         private readonly IRepository<int, SmartContract> _smartContracts;
         private readonly IRepository<string, Transaction> _transactions;
 
@@ -21,14 +21,16 @@ namespace BlockchainMonitor.DataAccess.Context
 
         public BlockchainDbContext()
             : base("BlockchainMonitor")
+        //: base("DefaultConnection")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<BlockchainDbContext, Migrations.Configuration>(true));
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<BlockchainDbContext, Migrations.Configuration>(true));
+            Database.SetInitializer<BlockchainDbContext>(null);
 
             _participants = new RepositoryBase<int, Participant>(this, i => i.Id);
             _nodes = new RepositoryBase<int, Node>(this, i => i.Id);
-            _blocks = new RepositoryBase<int, Block>(this, i => i.Id);
+            _blocks = new RepositoryBase<long, Block>(this, i => i.Id);
             _smartContracts = new RepositoryBase<int, SmartContract>(this, i => i.Id);
-            _transactions = new RepositoryBase<string, Transaction>(this, i => i.Id);
+            _transactions = new RepositoryBase<string, Transaction>(this, i => i.TxID);
         }
 
         IRepository<int, Participant> IBlockchainDbContext.Participants
@@ -47,7 +49,7 @@ namespace BlockchainMonitor.DataAccess.Context
             }
         }
 
-        IRepository<int, Block> IBlockchainDbContext.Blocks
+        IRepository<long, Block> IBlockchainDbContext.Blocks
         {
             get
             {

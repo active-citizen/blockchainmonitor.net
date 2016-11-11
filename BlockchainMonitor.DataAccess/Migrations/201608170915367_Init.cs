@@ -34,32 +34,32 @@ namespace BlockchainMonitor.DataAccess.Migrations
                 .ForeignKey("dbo.Participants", t => t.Participant_Id)
                 .Index(t => t.Participant_Id);
             
-            CreateTable(
-                "dbo.Blocks",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Number = c.Int(nullable: false),
-                        Hash = c.String(),
-                        IsClosed = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
+            //CreateTable(
+            //    "dbo.Blocks",
+            //    c => new
+            //        {
+            //            Id = c.Int(nullable: false, identity: true),
+            //            Number = c.Int(nullable: false),
+            //            Hash = c.String(),
+            //            IsClosed = c.Boolean(nullable: false),
+            //        })
+            //    .PrimaryKey(t => t.Id);
             
-            CreateTable(
-                "dbo.Transactions",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Time = c.DateTime(nullable: false),
-                        Data = c.Binary(),
-                        Block_Id = c.Int(),
-                        SmartContract_Id = c.Int(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Blocks", t => t.Block_Id)
-                .ForeignKey("dbo.SmartContracts", t => t.SmartContract_Id)
-                .Index(t => t.Block_Id)
-                .Index(t => t.SmartContract_Id);
+            //CreateTable(
+            //    "dbo.Transactions",
+            //    c => new
+            //        {
+            //            Id = c.String(nullable: false, maxLength: 128),
+            //            Time = c.DateTime(nullable: false),
+            //            Data = c.Binary(),
+            //            Block_Id = c.Int(),
+            //            SmartContract_Id = c.Int(),
+            //        })
+            //    .PrimaryKey(t => t.Id)
+            //    .ForeignKey("dbo.Blocks", t => t.Block_Id)
+            //    .ForeignKey("dbo.SmartContracts", t => t.SmartContract_Id)
+            //    .Index(t => t.Block_Id)
+            //    .Index(t => t.SmartContract_Id);
             
             CreateTable(
                 "dbo.SmartContracts",

@@ -54,8 +54,9 @@ namespace BlockchainMonitor.RabbitClient
                 handler.Handle(JsonConvert.DeserializeObject(message.JsonObject,
                                                              message.ObjType));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 //TODO: log this error
             }
             finally

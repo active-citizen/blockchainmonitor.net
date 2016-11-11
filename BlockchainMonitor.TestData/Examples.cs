@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Google.Protobuf.WellKnownTypes;
+using Type = BlockchainMonitor.DataModels.Blockchain.Type;
 
 namespace BlockchainMonitor.TestData
 {
@@ -16,9 +18,12 @@ namespace BlockchainMonitor.TestData
             {
                 Transaction tr = new Transaction()
                 {
-                    Data = new byte[] { 123, 234, 45, 34 },
-                    Time = DateTime.Now,
-                    Id = "agjhgkjhgg" + _rnd.Next().ToString(),
+                    Payload = "fgdf45bq57dfghdd79fg86d7fgs568g6",
+                    Timestamp = DateTime.Now,
+                    TxID = "as6ds6g-" + _rnd.Next() + "-s7d6f8",
+                    ChaincodeID = "s8d5f6s6fa6s5f8sa7065sf5as86dfa6s8d5f",
+                    BlockId = 1,
+                    Type = Type.CHAINCODE_DEPLOY
                 };
                 return tr;
             }

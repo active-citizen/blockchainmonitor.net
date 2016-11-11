@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace BlockchainMonitor.RabbitClient
 {
-    interface IPublisher
+    public interface IPublisher
     {
+        void PublishMessage<T>(T obj);
     }
 }

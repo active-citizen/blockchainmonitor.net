@@ -14,12 +14,20 @@ namespace BlockchainMonitor.DataCollector
         /// </summary>
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
+            if (Environment.UserInteractive)
             {
-                new DataCollectorService()
-            };
-            ServiceBase.Run(ServicesToRun);
+                DataCollectorService service = new DataCollectorService();
+                service.ServiceStartAndStop();
+            }
+            else
+            {
+                ServiceBase[] ServicesToRun;
+                ServicesToRun = new ServiceBase[]
+                {
+                    new DataCollectorService()
+                };
+                ServiceBase.Run(ServicesToRun);
+            }
         }
     }
 }
