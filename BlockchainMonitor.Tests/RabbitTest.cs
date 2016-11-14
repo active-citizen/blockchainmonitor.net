@@ -16,6 +16,7 @@ namespace BlockchainMonitor.Tests
     public class RabbitTest
     {
         ConnectionFactory _factory = new ConnectionFactory() { HostName = "localhost" };
+
         [TestInitialize]
         void Initialize()
         {
@@ -31,8 +32,8 @@ namespace BlockchainMonitor.Tests
                 Examples.RandomTransaction,
             };
 
-            Publisher publisher = new Publisher(_factory);
-            publisher.PublishMessage(trs);
+            //Publisher publisher = new Publisher(_factory);
+            //publisher.PublishMessage(trs);
         }
 
         [TestMethod]
@@ -45,9 +46,9 @@ namespace BlockchainMonitor.Tests
             builder.RegisterInstance(handler).As<IMessageHandler<Transaction>>();
             var container = builder.Build();
 
-            Subscriber subscriber = new Subscriber(_factory, container);
-            subscriber.Start();
-            Thread.Sleep(10000);
+            //Subscriber subscriber = new Subscriber(_factory, container, );
+            //subscriber.Start();
+            //Thread.Sleep(10000);
 
             Assert.IsNotNull(handler.Transactions.Count > 0);
         }

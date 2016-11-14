@@ -6,11 +6,12 @@ using System.Linq.Expressions;
 
 namespace BlockchainMonitor.DataAccess.Context
 {
-    
+
     public class RepositoryBase<TId, TItem> : IRepository<TId, TItem> where TItem : class where TId : IEquatable<TId>
     {
         private readonly Expression<Func<TItem, TId>> idAccessor;
         private readonly DbContext dbContext;
+
 
         public RepositoryBase(DbContext dbContext, Expression<Func<TItem, TId>> idAccessor)
         {

@@ -12,20 +12,28 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using EasyNetQ;
+using RabbitMQ.Client.Apigen.Attributes;
+using IConnectionFactory = RabbitMQ.Client.IConnectionFactory;
+using IContainer = Autofac.IContainer;
 
 namespace BlockchainMonitor.RabbitClient
 {
     public class Subscriber : BaseClient, ISubscriber
     {
-        private readonly IConnectionFactory _factory;
+        //private readonly IConnectionFactory _factory;
         private readonly IContainer _container;
-        private IConnection _connection;
-        private IModel _channel;
-        private EventingBasicConsumer _consumer;
+        //private IConnection _connection;
+        //private IModel _channel;
+        //private EventingBasicConsumer _consumer;
 
-        public Subscriber(IConnectionFactory factory, IContainer container)
+
+        private readonly IAdvancedBus _bus;
+
+        public Subscriber(IContainer container, IAdvancedBus bus)
         {
-            _factory = factory;
+            //_factory = factory;
+            _bus = bus;
             _container = container;
         }
 
@@ -62,64 +70,95 @@ namespace BlockchainMonitor.RabbitClient
             finally
             {
                 //TODO: manage poison messages
-                _channel.BasicAck(args.DeliveryTag, false);
+                //_channel.BasicAck(args.DeliveryTag, false);
+            }
+        }
+
+        private void MessageReceived(byte[] body)
+        {
+            try
+            {
+                string json = Encoding.UTF8.GetString(body);
+                var message = JsonConvert.DeserializeObject<RabbitMessage>(json);
+
+                var handlerType = typeof(IMessageHandler<>).MakeGenericType(message.ObjType);
+                if (!_container.IsRegistered(handlerType)) return;
+
+                using (_container.BeginLifetimeScope())
+                {
+                    var handler = (IMessageHandler)_container.Resolve(handlerType);
+                    handler.Handle(JsonConvert.DeserializeObject(message.JsonObject,
+                        message.ObjType));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                // TODO log this error
             }
         }
 
         public void Start()
         {
-            var connection = _factory.CreateConnection();
+            //var connection = _factory.CreateConnection();
+            var queue = _bus.QueueDeclare(_blockchainQueue);
 
-            _connection = connection as AutorecoveringConnection;
+            //EnsureQueue(_bus, _blockchainQueue);
 
-            if (_connection != null)
-            {
-                ((AutorecoveringConnection)_connection).Recovery += Recovery;
-            }
-            else
-            {
-                _connection = (Connection)connection;
-            }
+            _bus.Consume(queue, (body, properties, info) => MessageReceived(body));
 
-            _connection.ConnectionShutdown += ConnectionShutdown;
-            
-            _channel = _connection.CreateModel();
+            //_connection = connection as AutorecoveringConnection;
 
-            EnsureQueue(_channel, _blockchainQueue);
+            //if (_connection != null)
+            //{
+            //    ((AutorecoveringConnection)_connection).Recovery += Recovery;
+            //}
+            //else
+            //{
+            //    _connection = (Connection)connection;
+            //}
 
-            _consumer = new EventingBasicConsumer(_channel);
-            _consumer.Received += MessageReceivedInternal;
+            //_connection.ConnectionShutdown += ConnectionShutdown;
 
-            _channel.BasicConsume(queue: _blockchainQueue,
-                                    noAck: false,
-                                    consumer: _consumer);
+            //_channel = _connection.CreateModel();
+
+            //EnsureQueue(_channel, _blockchainQueue);
+
+            //_consumer = new EventingBasicConsumer(_channel);
+            //_consumer.Received += MessageReceivedInternal;
+
+            //_channel.BasicConsume(queue: _blockchainQueue,
+            //                        noAck: false,
+            //                        consumer: _consumer);
         }
+
+
 
         public void Stop()
         {
-            try
-            {
-                if (_connection != null)
-                {
-                    _connection.ConnectionShutdown -= ConnectionShutdown;
+            //try
+            //{
+            //    if (_connection != null)
+            //    {
+            //        _connection.ConnectionShutdown -= ConnectionShutdown;
 
-                    if(_connection is AutorecoveringConnection)
-                        ((AutorecoveringConnection)_connection).Recovery -= Recovery;
-                }
+            //        if (_connection is AutorecoveringConnection)
+            //            ((AutorecoveringConnection)_connection).Recovery -= Recovery;
+            //    }
 
-                if (_consumer != null) _consumer.Received -= MessageReceivedInternal;
-            }
-            finally
-            {
-                try
-                {
-                    _channel?.Dispose();
-                }
-                finally
-                {
-                    ((IDisposable)_connection)?.Dispose();
-                }
-            }
+            //    if (_consumer != null) _consumer.Received -= MessageReceivedInternal;
+            //}
+            //finally
+            //{
+            //    try
+            //    {
+            //        _channel?.Dispose();
+            //    }
+            //    finally
+            //    {
+            //        ((IDisposable)_connection)?.Dispose();
+            //    }
+            //}
 
         }
     }

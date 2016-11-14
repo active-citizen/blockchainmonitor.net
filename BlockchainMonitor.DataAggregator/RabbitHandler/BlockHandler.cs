@@ -25,8 +25,6 @@ namespace BlockchainMonitor.DataAggregator.RabbitHandler
         {
             if (_database.Blocks.GetById(block.Id) == null)
                 _database.Blocks.Insert(block);
-
-
         }
     }
 }

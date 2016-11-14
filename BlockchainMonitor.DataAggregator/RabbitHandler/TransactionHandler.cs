@@ -14,6 +14,7 @@ namespace BlockchainMonitor.DataAggregator.RabbitHandler
     {
         private readonly IBlockchainDbContext _database;
         private readonly IRepository _redis;
+
         public TransactionHandler(IBlockchainDbContext context, IRepository redis)
         {
             _database = context;
