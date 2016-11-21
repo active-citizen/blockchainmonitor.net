@@ -27,13 +27,9 @@ namespace BlockchainMonitor.RabbitClient
         //private IModel _channel;
         //private EventingBasicConsumer _consumer;
 
-
-        private readonly IAdvancedBus _bus;
-
         public Subscriber(IContainer container, IAdvancedBus bus)
         {
             //_factory = factory;
-            _bus = bus;
             _container = container;
         }
 
@@ -84,9 +80,9 @@ namespace BlockchainMonitor.RabbitClient
                 var handlerType = typeof(IMessageHandler<>).MakeGenericType(message.ObjType);
                 if (!_container.IsRegistered(handlerType)) return;
 
-                using (_container.BeginLifetimeScope())
+                using (var scope = _container.BeginLifetimeScope())
                 {
-                    var handler = (IMessageHandler)_container.Resolve(handlerType);
+                    var handler = (IMessageHandler)scope.Resolve(handlerType);
                     handler.Handle(JsonConvert.DeserializeObject(message.JsonObject,
                         message.ObjType));
                 }
@@ -101,11 +97,13 @@ namespace BlockchainMonitor.RabbitClient
         public void Start()
         {
             //var connection = _factory.CreateConnection();
-            var queue = _bus.QueueDeclare(_blockchainQueue);
+            var bus = _container.Resolve<IAdvancedBus>();
+
+            var queue = bus.QueueDeclare(_blockchainQueue);
 
             //EnsureQueue(_bus, _blockchainQueue);
 
-            _bus.Consume(queue, (body, properties, info) => MessageReceived(body));
+            bus.Consume(queue, (body, properties, info) => MessageReceived(body));
 
             //_connection = connection as AutorecoveringConnection;
 
