@@ -51,6 +51,7 @@ namespace BlockchainMonitor.DataAggregator
             builder.RegisterModule(new RedisClientModule(ConfigurationManager.AppSettings["redisHost"]));
 
             builder.RegisterType<TransactionHandler>().AsImplementedInterfaces();
+            builder.RegisterType<BlockHandler>().AsImplementedInterfaces();
 
             _container = builder.Build();
 

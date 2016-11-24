@@ -7,7 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using BlockchainMonitor.DataModels.Aggregated;
 using BlockchainMonitor.DataModels.Blockchain;
+using Google.Protobuf.WellKnownTypes;
 using Newtonsoft.Json;
+using Type = BlockchainMonitor.DataModels.Blockchain.Type;
 
 namespace RedisTestConsoleApp
 {
@@ -26,15 +28,21 @@ namespace RedisTestConsoleApp
 
             Transaction tr1 = new Transaction()
             {
-                Data = new byte[] { 123, 234, 45, 34 },
-                Time = DateTime.Now,
-                Id = "agjhgkjhgqweruyg",
+                Payload = "fgdf45bq57dfghdd79fg86d7fgs568g6",
+                Timestamp = DateTime.Now,
+                TxID = "as6ds6g-" + DateTime.Now.Ticks + "-s7d6f8",
+                ChaincodeID = "s8d5f6s6fa6s5f8sa7065sf5as86dfa6s8d5f",
+                BlockId = 1,
+                Type = Type.CHAINCODE_DEPLOY
             };
             Transaction tr2 = new Transaction()
             {
-                Data = new byte[] { 123, 234, 45, 34 },
-                Time = DateTime.Now,
-                Id = "agjhgkjhgasdfasdfruyg",
+                Payload = "fgdf45bq57dfghdd79fg86d7fgs568g6",
+                Timestamp = DateTime.Now,
+                TxID = "as6ds6g-" + DateTime.Now.Ticks + "-s7d6f8",
+                ChaincodeID = "s8d5f6s6fa6s5f8sa7065sf5as86dfa6s8d5f",
+                BlockId = 1,
+                Type = Type.CHAINCODE_DEPLOY
             };
 
             var list = new List<Transaction> { tr1, tr2 };

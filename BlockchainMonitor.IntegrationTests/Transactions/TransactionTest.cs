@@ -15,13 +15,13 @@ namespace BlockchainMonitor.IntegrationTests.Transactions
         //Skip DataCollector and add transactions directly to the RabbitMQ
         public void AddRandomTransactions(int count)
         {
-            IConnectionFactory factory = new ConnectionFactory() { HostName = "localhost" };
-            Publisher rabbit = new Publisher(factory);
+            //IConnectionFactory factory = new ConnectionFactory() { HostName = "localhost" };
+            //Publisher rabbit = new Publisher(factory);
 
-            List<Transaction> transactions = new List<Transaction>();
+            //List<Transaction> transactions = new List<Transaction>();
 
-            for (int i = 0; i < count; i++) transactions.Add(Examples.RandomTransaction);
-            rabbit.PublishMessage<List<Transaction>>(transactions);
+            //for (int i = 0; i < count; i++) transactions.Add(Examples.RandomTransaction);
+            //rabbit.PublishMessage<List<Transaction>>(transactions);
         }
     }
 }

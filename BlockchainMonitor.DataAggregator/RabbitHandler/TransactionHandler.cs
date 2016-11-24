@@ -14,6 +14,7 @@ namespace BlockchainMonitor.DataAggregator.RabbitHandler
     {
         private readonly IBlockchainDbContext _database;
         private readonly IRepository _redis;
+
         public TransactionHandler(IBlockchainDbContext context, IRepository redis)
         {
             _database = context;
@@ -23,11 +24,14 @@ namespace BlockchainMonitor.DataAggregator.RabbitHandler
         public override void Handle(List<Transaction> transactions)
         {
             var newTransactions = transactions.Where(
-                t => _database.Transactions.GetById(t.Id) == null).ToList();
+                t => _database.Transactions.GetById(t.TxID) == null).ToList();
+
+            if (!newTransactions.Any()) return;
+
             _database.Transactions.Insert(newTransactions);
 
             var lastTransactions = _database.Transactions.GetAll()
-                .OrderByDescending(t => t.Time).Take(10).ToList();
+                .OrderByDescending(t => t.Timestamp).Take(10).ToList();
 
             _redis.SetLastTransactions(lastTransactions);
         }

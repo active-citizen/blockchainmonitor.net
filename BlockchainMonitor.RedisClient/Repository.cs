@@ -8,6 +8,7 @@ using BlockchainMonitor.DataModels.Aggregated;
 using BlockchainMonitor.DataModels.Blockchain;
 using Newtonsoft.Json;
 using BlockchainMonitor.DataModels.Participants;
+using Newtonsoft.Json.Converters;
 
 namespace BlockchainMonitor.RedisClient
 {
@@ -110,7 +111,12 @@ namespace BlockchainMonitor.RedisClient
         {
             IDatabase data = _connectionMultiplexer.GetDatabase();
 
-            var values = (RedisValue)JsonConvert.SerializeObject(obj);
+            //var values = (RedisValue)JsonConvert.SerializeObject(obj);
+
+            var values = (RedisValue) JsonConvert.SerializeObject(obj, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
 
             data.StringSet(key, values);
         }

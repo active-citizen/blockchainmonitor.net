@@ -12,20 +12,19 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using EasyNetQ;
+using RabbitMQ.Client.Apigen.Attributes;
+using IConnectionFactory = RabbitMQ.Client.IConnectionFactory;
+using IContainer = Autofac.IContainer;
 
 namespace BlockchainMonitor.RabbitClient
 {
     public class Subscriber : BaseClient, ISubscriber
     {
-        private readonly IConnectionFactory _factory;
         private readonly IContainer _container;
-        private IConnection _connection;
-        private IModel _channel;
-        private EventingBasicConsumer _consumer;
 
-        public Subscriber(IConnectionFactory factory, IContainer container)
+        public Subscriber(IContainer container)
         {
-            _factory = factory;
             _container = container;
         }
 
@@ -39,86 +38,65 @@ namespace BlockchainMonitor.RabbitClient
             //TODO: log
         }
 
-        private void MessageReceivedInternal(object sender, BasicDeliverEventArgs args)
+        private void MessageReceived(byte[] body)
         {
             try
             {
-                var body = args.Body;
                 string json = Encoding.UTF8.GetString(body);
                 var message = JsonConvert.DeserializeObject<RabbitMessage>(json);
 
                 var handlerType = typeof(IMessageHandler<>).MakeGenericType(message.ObjType);
                 if (!_container.IsRegistered(handlerType)) return;
 
-                var handler = (IMessageHandler)_container.Resolve(handlerType);
-                handler.Handle(JsonConvert.DeserializeObject(message.JsonObject,
-                                                             message.ObjType));
+                using (var scope = _container.BeginLifetimeScope())
+                {
+                    var handler = (IMessageHandler)scope.Resolve(handlerType);
+                    handler.Handle(JsonConvert.DeserializeObject(message.JsonObject,
+                        message.ObjType));
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //TODO: log this error
-            }
-            finally
-            {
-                //TODO: manage poison messages
-                _channel.BasicAck(args.DeliveryTag, false);
+                Console.WriteLine(ex);
+                // TODO log this error
             }
         }
 
         public void Start()
         {
-            var connection = _factory.CreateConnection();
+            var bus = _container.Resolve<IAdvancedBus>();
+            var queue = bus.QueueDeclare(_blockchainQueue);
 
-            _connection = connection as AutorecoveringConnection;
-
-            if (_connection != null)
-            {
-                ((AutorecoveringConnection)_connection).Recovery += Recovery;
-            }
-            else
-            {
-                _connection = (Connection)connection;
-            }
-
-            _connection.ConnectionShutdown += ConnectionShutdown;
-            
-            _channel = _connection.CreateModel();
-
-            EnsureQueue(_channel, _blockchainQueue);
-
-            _consumer = new EventingBasicConsumer(_channel);
-            _consumer.Received += MessageReceivedInternal;
-
-            _channel.BasicConsume(queue: _blockchainQueue,
-                                    noAck: false,
-                                    consumer: _consumer);
+            bus.Consume(queue, (body, properties, info) => MessageReceived(body));
         }
+
+
 
         public void Stop()
         {
-            try
-            {
-                if (_connection != null)
-                {
-                    _connection.ConnectionShutdown -= ConnectionShutdown;
+            //try
+            //{
+            //    if (_connection != null)
+            //    {
+            //        _connection.ConnectionShutdown -= ConnectionShutdown;
 
-                    if(_connection is AutorecoveringConnection)
-                        ((AutorecoveringConnection)_connection).Recovery -= Recovery;
-                }
+            //        if (_connection is AutorecoveringConnection)
+            //            ((AutorecoveringConnection)_connection).Recovery -= Recovery;
+            //    }
 
-                if (_consumer != null) _consumer.Received -= MessageReceivedInternal;
-            }
-            finally
-            {
-                try
-                {
-                    _channel?.Dispose();
-                }
-                finally
-                {
-                    ((IDisposable)_connection)?.Dispose();
-                }
-            }
+            //    if (_consumer != null) _consumer.Received -= MessageReceivedInternal;
+            //}
+            //finally
+            //{
+            //    try
+            //    {
+            //        _channel?.Dispose();
+            //    }
+            //    finally
+            //    {
+            //        ((IDisposable)_connection)?.Dispose();
+            //    }
+            //}
 
         }
     }
