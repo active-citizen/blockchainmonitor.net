@@ -10,7 +10,7 @@ using BlockchainMonitor.RedisClient;
 
 namespace BlockchainMonitor.DataAggregator.RabbitHandler
 {
-    public class TransactionHandler : MessageHandlerBase<List<Transaction>> 
+    public class TransactionHandler : MessageHandlerBase<List<Transaction>>
     {
         private readonly IBlockchainDbContext _database;
         private readonly IRepository _redis;
@@ -26,8 +26,9 @@ namespace BlockchainMonitor.DataAggregator.RabbitHandler
             var newTransactions = transactions.Where(
                 t => _database.Transactions.GetById(t.TxID) == null).ToList();
 
+            if (!newTransactions.Any()) return;
+
             _database.Transactions.Insert(newTransactions);
-            //_database.Transactions.Insert(transactions);
 
             var lastTransactions = _database.Transactions.GetAll()
                 .OrderByDescending(t => t.Timestamp).Take(10).ToList();

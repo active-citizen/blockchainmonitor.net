@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac;
 using BlockchainMonitor.DataModels.Blockchain;
 using Newtonsoft.Json;
 using BlockchainMonitor.RabbitClient.Model;
 using EasyNetQ;
 using EasyNetQ.Topology;
 using IConnectionFactory = RabbitMQ.Client.IConnectionFactory;
+using IContainer = Autofac.IContainer;
 
 namespace BlockchainMonitor.RabbitClient
 {
@@ -17,10 +19,10 @@ namespace BlockchainMonitor.RabbitClient
         //private readonly IConnectionFactory _factory;
 
         private readonly IAdvancedBus _bus;
+        //private readonly IContainer _container;
 
         public Publisher(IAdvancedBus bus)
         {
-            //_factory = factory;
             _bus = bus;
         }
 

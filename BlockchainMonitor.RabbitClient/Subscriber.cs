@@ -21,15 +21,10 @@ namespace BlockchainMonitor.RabbitClient
 {
     public class Subscriber : BaseClient, ISubscriber
     {
-        //private readonly IConnectionFactory _factory;
         private readonly IContainer _container;
-        //private IConnection _connection;
-        //private IModel _channel;
-        //private EventingBasicConsumer _consumer;
 
-        public Subscriber(IContainer container, IAdvancedBus bus)
+        public Subscriber(IContainer container)
         {
-            //_factory = factory;
             _container = container;
         }
 
@@ -41,33 +36,6 @@ namespace BlockchainMonitor.RabbitClient
         private void ConnectionShutdown(object sender, ShutdownEventArgs e)
         {
             //TODO: log
-        }
-
-        private void MessageReceivedInternal(object sender, BasicDeliverEventArgs args)
-        {
-            try
-            {
-                var body = args.Body;
-                string json = Encoding.UTF8.GetString(body);
-                var message = JsonConvert.DeserializeObject<RabbitMessage>(json);
-
-                var handlerType = typeof(IMessageHandler<>).MakeGenericType(message.ObjType);
-                if (!_container.IsRegistered(handlerType)) return;
-
-                var handler = (IMessageHandler)_container.Resolve(handlerType);
-                handler.Handle(JsonConvert.DeserializeObject(message.JsonObject,
-                                                             message.ObjType));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                //TODO: log this error
-            }
-            finally
-            {
-                //TODO: manage poison messages
-                //_channel.BasicAck(args.DeliveryTag, false);
-            }
         }
 
         private void MessageReceived(byte[] body)
@@ -96,38 +64,10 @@ namespace BlockchainMonitor.RabbitClient
 
         public void Start()
         {
-            //var connection = _factory.CreateConnection();
             var bus = _container.Resolve<IAdvancedBus>();
-
             var queue = bus.QueueDeclare(_blockchainQueue);
 
-            //EnsureQueue(_bus, _blockchainQueue);
-
             bus.Consume(queue, (body, properties, info) => MessageReceived(body));
-
-            //_connection = connection as AutorecoveringConnection;
-
-            //if (_connection != null)
-            //{
-            //    ((AutorecoveringConnection)_connection).Recovery += Recovery;
-            //}
-            //else
-            //{
-            //    _connection = (Connection)connection;
-            //}
-
-            //_connection.ConnectionShutdown += ConnectionShutdown;
-
-            //_channel = _connection.CreateModel();
-
-            //EnsureQueue(_channel, _blockchainQueue);
-
-            //_consumer = new EventingBasicConsumer(_channel);
-            //_consumer.Received += MessageReceivedInternal;
-
-            //_channel.BasicConsume(queue: _blockchainQueue,
-            //                        noAck: false,
-            //                        consumer: _consumer);
         }
 
 

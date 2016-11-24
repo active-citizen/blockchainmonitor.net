@@ -43,8 +43,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,16 +60,6 @@
     <Compile Include="Context\BlockchainDbContext.cs" />
     <Compile Include="Context\IRepository.cs" />
     <Compile Include="Context\RepositoryBase.cs" />
-    <Compile Include="Migrations.Data\Configuration.Data.cs" />
-    <Compile Include="Migrations\201608170915367_Init.cs" />
-    <Compile Include="Migrations\201608170915367_Init.Designer.cs">
-      <DependentUpon>201608170915367_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608171209500_IPAddressChanged.cs" />
-    <Compile Include="Migrations\201608171209500_IPAddressChanged.Designer.cs">
-      <DependentUpon>201608171209500_IPAddressChanged.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,14 +71,6 @@
       <Project>{dbafdeef-9c79-458d-bef5-ba6e9401c902}</Project>
       <Name>BlockchainMonitor.DataModels</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201608170915367_Init.resx">
-      <DependentUpon>201608170915367_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608171209500_IPAddressChanged.resx">
-      <DependentUpon>201608171209500_IPAddressChanged.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

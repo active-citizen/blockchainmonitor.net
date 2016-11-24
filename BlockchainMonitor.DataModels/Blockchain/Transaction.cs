@@ -41,10 +41,10 @@ namespace BlockchainMonitor.DataModels.Blockchain
         /// <summary>
         /// The ID of the parent block
         /// </summary>
-        [ForeignKey("Block")]
+        //[ForeignKey("Block")]
         public long BlockId { get; set; }
 
-        public virtual Block Block { get; set; }
+        //public virtual Block Block { get; set; }
     }
 
     public enum Type : byte

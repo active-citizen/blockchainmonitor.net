@@ -27,8 +27,9 @@ namespace BlockchainMonitor.WebUI.Initialization
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Block, BlockVM>().ForMember(blockVM => blockVM.TransactionsCount,
-                    blockConfig => blockConfig.MapFrom(block => block.Transactions.Count));
+                cfg.CreateMap<Block, BlockVM>();
+                //.ForMember(blockVM => blockVM.TransactionsCount,
+                //    blockConfig => blockConfig.MapFrom(block => block.Transactions.Count));
 
                 cfg.CreateMap<Statistics, StatisticsVM>();
 

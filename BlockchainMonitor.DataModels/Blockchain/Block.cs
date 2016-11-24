@@ -32,7 +32,7 @@ namespace BlockchainMonitor.DataModels.Blockchain
         /// <summary>
         /// An array of Transaction messages
         /// </summary>
-        public virtual List<Transaction> Transactions { get; set; }
+        //public virtual List<Transaction> Transactions { get; set; }
 
         /// <summary>
         /// The NonHashData message is used to store block metadata
